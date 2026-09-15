@@ -1,8 +1,6 @@
 #include "iot_servo.h"
 #include "motor_control.h"
 
-#define MAX_SERVO_ANGLE     140 //temp value
-#define MIN_SERVO_ANGLE     40  //temp value  
 #define SERVO_CH0_PIN       0   //temp value
 #define SERVO_CH1_PIN       1   //temp value
 

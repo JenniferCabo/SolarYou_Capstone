@@ -6,39 +6,29 @@
 */
 
 
+#include "PID_stabilization.h"
+
 #define PID_DT      0.010f  // example value
 
 
-typedef struct {
-    // Basic PID
-    float Kp;                   // proportional gain constant
-    float Ki;                   // integral gain constant
-    float Kd;                   // derivative gain constant
-    float prev_err;             // Previous Error
-    float integral_accum_err;   // Accumulated Integral Error
-    float max;                  // Maximum possible Position Command
-    float min;                  // Minimum possible Position Command
-
-    // Derivative Noise Filtering
-    float T_C;                  // Derivative Filter Time Constant
-    float prev_deriv;           // Previous derivative value
-
-    // Integral Anti-windup
-
-
-} PID_controller;
-
-void pid_init (PID_controller *pid){
+void pid_init (PID_controller *pid)
+{
     // temp init values for pid 
     
     pid->prev_err = 0;             
     pid->integral_accum_err = 0;   
     pid->max = 50;                  // assumed centerpoint 90deg              
-    pid->min = -50;                      
-    pid->T_C = 0.050f;              // to be tuned  
+    pid->min = -50;                        
     pid->prev_deriv = 0; 
 }
 
+void pid_tune (PID_controller *pid, float Kp, float Ki, float Kd, float T_C)
+{
+    pid->Kp = Kp;
+    pid->Ki = Ki;
+    pid->Kd = Kd;
+    pid->T_C = T_C;
+}
 
 float pid_calculate (PID_controller *pid, float measured_angle, float target_angle)
 {
@@ -63,7 +53,7 @@ float pid_calculate (PID_controller *pid, float measured_angle, float target_ang
     float derivative = (err - pid->prev_err + (pid->T_C * pid->prev_deriv))/(PID_DT + pid->T_C);
 
     // Candidate command calculation with saturation check
-        command = (pid->Kp * proportional) + (pid->Ki * candidate_integral) + (pid->Kd * derivative);
+    command = (pid->Kp * proportional) + (pid->Ki * candidate_integral) + (pid->Kd * derivative);
     
     if ((command > pid->max) && (err > 0)){
         command = (pid->Kp * proportional) + (pid->Ki * old_integral) + (pid->Kd * derivative);
@@ -90,4 +80,11 @@ float pid_calculate (PID_controller *pid, float measured_angle, float target_ang
     pid->prev_deriv = derivative;
     
     return command;
+}
+
+void pid_reset (PID_controller *pid)
+{
+    pid->prev_err = 0;
+    pid->integral_accum_err = 0;
+    pid->prev_deriv = 0;
 }
