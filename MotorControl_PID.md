@@ -10,12 +10,23 @@ A system-level view of the code is as follows:
 Stabilization Task
 │
 ├── PID_stabilization.c
+|   |
+|   ├── pid_init()
+|   |   └── Initialize state/configuration
+|   |
+|   ├── pid_tune()
+|   |   └── Set tunable parameters (Kp, Ki, Kd, Filter time constant)
 │   │
-│   └── pid_calculate()
-│       └── Calculates single-axis control correction from:
-│           ├── Target platform angle
-│           └── Measured IMU angle
-│
+│   ├── pid_calculate()
+│   |   ├── Calculates single-axis control correction from:
+│   |   |   ├── Target platform angle
+│   |   |   ├── Measured IMU angle
+|   |   └── Performs output command clean-up:
+|   |       ├── Derivative gain filtering
+|   |       └── Anti-windup and motor saturation consideration
+│   └── pid_reset()
+|       └── clears runtime history (time dependent PID components)
+|
 └── motor_control.c
     │
     ├── motor_init()
@@ -30,11 +41,9 @@ Stabilization Task
 
 ### Under Development
 
-- PID_stabilization.c is rudimentary, does not include real-world constraints such as command limits (min-max), actuator saturation, derivative sensitivity to noise (needs filter), actual timing input and rate limiting for command delta 
-- PID and motor functions do not currently interact, stabilization.c needs work
-- PID parameters Kp, Ki, Kd are untuned
+-
 
 ### Pending Decisions
 
-- task frequency
+- task timing implementatio (higher level - RTOS or Seq)
 - MCPWM vs LEDC -- is LEDC sufficent as a PWM controller?
