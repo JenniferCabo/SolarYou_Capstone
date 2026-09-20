@@ -1,8 +1,8 @@
 #include "iot_servo.h"
 #include "motor_control.h"
 
-#define SERVO_CH0_PIN       0   //temp value
-#define SERVO_CH1_PIN       1   //temp value
+#define SERVO_CH0_PIN       33   //temp value
+#define SERVO_CH1_PIN       32   //temp value
 
 
 // define servos
