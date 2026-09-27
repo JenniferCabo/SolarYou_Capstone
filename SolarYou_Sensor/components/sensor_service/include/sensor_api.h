@@ -49,7 +49,25 @@ typedef struct {
 } sensor_snapshot_t;
 
 bool sensor_adapter_init(void);
+
+/* These are separate so an IMU reset does not also change the saved light balance. */
+bool sensor_adapter_capture_imu_neutral(void);
+bool sensor_adapter_capture_light_neutral(void);
+
+/* Convenience function for tests that need to capture both references together. */
 bool sensor_adapter_capture_neutral(void);
+
+/* Each function below performs one real sensor read and returns only that
+ * sensor's values, validity, timing, and health information. This lets the
+ * integration code poll the sensors on separate schedules. The IMU and power
+ * sensor share the I2C bus. Until it is decided where the shared bus mutex
+ * belongs, callers must not run those two reads at the same time from
+ * different tasks. */
+bool sensor_adapter_read_imu(sensor_imu_sample_t *sample);
+bool sensor_adapter_read_light(sensor_light_sample_t *sample);
+bool sensor_adapter_read_power(sensor_power_sample_t *sample);
+
+/* Convenience read for the combined validation, debug, and JSON paths. */
 bool sensor_adapter_read(sensor_snapshot_t *snapshot);
 void sensor_adapter_clear_latched_faults(void);
 

@@ -100,7 +100,7 @@ This test uses pretend voltage and current values. It does NOT recreate the INA2
 
 ## Combined test
 
-Build without a mode argument and open the root `diagram.json`. This runs all three sensor groups through one `sensor_adapter_read()` call. I would recommend
+Build without a mode argument and open the root `diagram.json`. This runs all three sensor groups through one `sensor_adapter_read()` call. That combined function now calls the three individual public read APIs one after another, so the simulation exercises the same read paths Manuel can poll separately. I would recommend
 changing one group at a time first so you can see what each one does. Then try changing multiple values or pressing the fault buttons together.
 
 ## Optional automated scenarios

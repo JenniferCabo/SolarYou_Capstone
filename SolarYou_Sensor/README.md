@@ -85,15 +85,29 @@ The functions Manuel would call are in `components/sensor_service/include/sensor
 
 ```c
 bool sensor_adapter_init(void);
+bool sensor_adapter_capture_imu_neutral(void);
+bool sensor_adapter_capture_light_neutral(void);
 bool sensor_adapter_capture_neutral(void);
+bool sensor_adapter_read_imu(sensor_imu_sample_t *sample);
+bool sensor_adapter_read_light(sensor_light_sample_t *sample);
+bool sensor_adapter_read_power(sensor_power_sample_t *sample);
 bool sensor_adapter_read(sensor_snapshot_t *snapshot);
 void sensor_adapter_clear_latched_faults(void);
 ```
 
 - `sensor_adapter_init()` starts the sensors.
-- `sensor_adapter_capture_neutral()` saves the current IMU position and light balance as zero.
-- `sensor_adapter_read()` gives back one snapshot with the IMU, light, power, and their validity and health information.
+- `sensor_adapter_capture_imu_neutral()` saves the current stable IMU position as zero without changing the light reference.
+- `sensor_adapter_capture_light_neutral()` saves the current evenly lit four-sensor balance as zero without changing the IMU reference.
+- `sensor_adapter_capture_neutral()` calls both neutral functions for the standalone tests that need to capture both references together.
+- `sensor_adapter_read_imu()` performs one IMU read and returns only the centered angles and IMU health information.
+- `sensor_adapter_read_light()` performs one four-sensor light-array read and returns only the tracking errors, raw ADC values, and light health information.
+- `sensor_adapter_read_power()` performs one INA219 read and returns only the voltage, current, calculated power, shunt voltage, and power health information.
+- `sensor_adapter_read()` calls the selected individual read functions one after another and gives back one combined snapshot. It stays available for the combined validation, debug, and draft JSON paths; Manuel's integration does not have to use it.
 - `sensor_adapter_clear_latched_faults()` clears old fault history but does not hide a fault that is still happening.
+
+Each individual sample includes its own validity and `sensor_health_t`. The health structure already carries that sensor's sample time, age, sequence, error count, state, and faults, so independently polled readings keep independent timing information.
+
+The BNO085 and INA219 share the I2C bus. If their individual functions are called from separate RTOS tasks, those calls must not use the bus at the same time. The team still needs to decide whether the shared mutex belongs inside this component or in the higher-level integration code.
 
 That snapshot can be turned into JSON with:
 
@@ -111,10 +125,9 @@ The JSON field names are still a draft. The [snapshot contract](docs/SNAPSHOT_CO
 
 ## Team integration
 
-The idea is basically for Manuel to add this sensor component to the main ESP-IDF project and call `sensor_adapter_read()` from the team's sensor task. The
-resulting snapshot can go to the control code and to whatever sends data out.
+The idea is basically for Manuel to add this sensor component to the main ESP-IDF project and call `sensor_adapter_read_imu()`, `sensor_adapter_read_light()`, and `sensor_adapter_read_power()` on the schedules for RTOS integration needs. If the BNO085 resets, he can recapture only the IMU reference with `sensor_adapter_capture_imu_neutral()` instead of also changing the saved light balance. Manuel's higher-level code will own any aggregation of the latest readings.
 
-Zack can use a JSON copy once we agree on the final field names and how to send it. The serial monitor printout is just for testing, it is not the dashboard connection.
+The combined `sensor_adapter_read()` path remains useful for the standalone all-sensor test and the current draft JSON example. Zack can use JSON produced by the higher-level telemetry path once the team agrees on the final fields and transport. The serial monitor printout is just for testing; it is not the dashboard connection.
 
 ## Current status
 

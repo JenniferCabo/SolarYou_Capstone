@@ -1,8 +1,40 @@
-# Sensor snapshot and draft JSON message
+# Individual sensor samples, combined snapshot, and draft JSON
 
-The sensor code produces one snapshot containing the latest IMU, light, and power information. Manuel's control code can use the C structure directly. The same snapshot can be converted to JSON for Zack's dashboard.
+The public C API now lets Manuel's control code poll the IMU, light array, and power sensor independently. Each call returns only that sensor's values, validity, and health information. The health information already includes that sensor's sample time, age, and sequence number.
+
+The component still has a combined read for standalone validation, debugging, and the current draft JSON example. That combined function performs the three selected individual reads one after another. Manuel's higher-level integration will decide how to store and aggregate independently polled readings for control and telemetry.
 
 The serializer only creates JSON text and nothing else. It does not connect to Wi-Fi, choose an endpoint, send a message, or create an RTOS task.
+
+## Separate neutral functions
+
+```c
+bool sensor_adapter_capture_imu_neutral(void);
+bool sensor_adapter_capture_light_neutral(void);
+bool sensor_adapter_capture_neutral(void);
+```
+
+The IMU function saves the current stable physical orientation as the centered `0,0` reference. The light function saves the current evenly illuminated four-sensor balance as the zero-error reference. They are separate because an IMU reset should not replace the light reference. The original combined function stays available for standalone tests that intentionally capture both references together.
+
+These functions save application references in RAM. They are not a replacement for the BNO085's internal sensor calibration, and the references are not currently saved across a full power cycle.
+
+## Individual read functions
+
+```c
+bool sensor_adapter_read_imu(sensor_imu_sample_t *sample);
+bool sensor_adapter_read_light(sensor_light_sample_t *sample);
+bool sensor_adapter_read_power(sensor_power_sample_t *sample);
+```
+
+Each function performs one real read of only the named sensor group. A false return means that sample is not currently valid; the caller can still inspect the returned health information to determine why. The BNO085 and INA219 share the I2C bus, so the team must serialize those two calls if separate RTOS tasks could run them at the same time.
+
+The combined convenience function is:
+
+```c
+bool sensor_adapter_read(sensor_snapshot_t *snapshot);
+```
+
+It is not required for Manuel's individual polling design. The current combined Wokwi test and JSON serializer keep using it so the full sensor path can still be exercised in one place.
 
 ## Current version
 
@@ -120,4 +152,3 @@ Give the JSON function a buffer of at least SENSOR_JSON_RECOMMENDED_CAPACITY byt
 - Whether raw readings are always sent or only sent in a debug mode
 
 The current key strings are kept in `components/sensor_service/include/sensor_json_keys.h`, so they can be updated in one place after we all agree on the final contract.
-
