@@ -16,15 +16,6 @@ typedef enum {
 
 } system_mode_t;
 
-// typedef enum {
-
-//     TASK_TELEMETRY,
-//     TASK_STABILIZATION,
-//     TASK_LIGHT,
-//     TASK_NONE
-
-// } system_task_t;
-
 typedef struct {
 
     // tracking and stabilization
@@ -45,7 +36,6 @@ typedef struct {
 
     // system
     system_mode_t mode;
-    //system_task_t task;
 
 } system_state_t;
 

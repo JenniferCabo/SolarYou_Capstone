@@ -8,7 +8,7 @@
 #define MAX_SERVO_ANGLE_PITCH       120 
 #define MIN_SERVO_ANGLE_PITCH       0
 
-esp_err_t motor_init(void);
+esp_err_t motor_init(float roll_center, float pitch_center);
 esp_err_t command_motor_angle(float roll_angle, float pitch_angle);
 esp_err_t motor_del(void);
 

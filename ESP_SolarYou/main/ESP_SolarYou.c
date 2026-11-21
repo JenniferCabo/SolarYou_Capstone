@@ -85,6 +85,22 @@ void app_main(void)
 
     // Set system state
     sys_state_reset(&curr_state);
+    esp_err_t err = ESP_OK;
+
+    #if defined(CONFIG_SOLARYOU_RUNTIME_FULL_CONTROL) && CONFIG_SOLARYOU_RUNTIME_FULL_CONTROL
+    // Full integration mode can command the physical servos.
+    err = stabilization_init(&roll_ctlr, &pitch_ctlr, &stab_config);
+    if (err != ESP_OK){
+        curr_state.mode = SYSTEM_ERROR;
+        ESP_LOGE(TAG, "Stabilization Initialization failed: %s\n", esp_err_to_name(err));
+        return;
+    }
+    vTaskDelay(pdMS_TO_TICKS(1000));   // panel reaches center and stops moving
+    ESP_LOGW(TAG, "FULL CONTROL MODE: motor outputs are enabled");
+#else
+    // Sensor/dashboard mode deliberately skips motor and PID initialization.
+    ESP_LOGI(TAG, "SENSOR/DASHBOARD TEST MODE: motor outputs are disabled");
+#endif
 
     // Initialize every configured sensor and report each result separately.
     const bool all_selected_sensors_ready = sensor_adapter_init();
@@ -126,24 +142,6 @@ void app_main(void)
         ESP_LOGW(TAG, "An optional sensor is unavailable; continuing with IMU UART testing");
     }
 #endif
-
-    esp_err_t err = ESP_OK;
-
-#if defined(CONFIG_SOLARYOU_RUNTIME_FULL_CONTROL) && CONFIG_SOLARYOU_RUNTIME_FULL_CONTROL
-    // Full integration mode can command the physical servos.
-    err = stabilization_init(&roll_ctlr, &pitch_ctlr, &stab_config);
-    if (err != ESP_OK){
-        curr_state.mode = SYSTEM_ERROR;
-        ESP_LOGE(TAG, "Stabilization Initialization failed: %s\n", esp_err_to_name(err));
-        return;
-    }
-    vTaskDelay(pdMS_TO_TICKS(1000));   // panel reaches center and stops moving
-    ESP_LOGW(TAG, "FULL CONTROL MODE: motor outputs are enabled");
-#else
-    // Sensor/dashboard mode deliberately skips motor and PID initialization.
-    ESP_LOGI(TAG, "SENSOR/DASHBOARD TEST MODE: motor outputs are disabled");
-#endif
-
 
     // calibrate IMU (50 samples in sensor_service/include/component_config.h)
     if(!sensor_adapter_capture_imu_neutral()){

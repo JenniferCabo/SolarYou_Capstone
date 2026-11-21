@@ -11,33 +11,35 @@ esp_err_t stabilization_init(pid_controller_t *roll, pid_controller_t *pitch, co
     if(roll == NULL || pitch == NULL || config == NULL){
         return ESP_ERR_INVALID_ARG;
     }
-    esp_err_t err = motor_init();
+    esp_err_t err = motor_init(config->roll_servo_center, config->pitch_servo_center);
     if (err != ESP_OK){
-        ESP_LOGE(TAG, "Motor initalization failed %s\n", esp_err_to_name(err));
-        return err;
-    }
-
-    err = command_motor_angle(config->roll_servo_center, config->pitch_servo_center);
-    if (err != ESP_OK){
-        ESP_LOGE(TAG, "Could not center servos: %s", esp_err_to_name(err));
-        motor_del();
+        ESP_LOGE(TAG, "Motor initalization failed %s", esp_err_to_name(err));
         return err;
     }
 
     err  = pid_init (roll, config->roll_Kp, config->roll_Ki, config->roll_Kd, config->deriv_time_const, config->pid_cmd_min, config->pid_cmd_max, config->roll_servo_center);
     if (err != ESP_OK){
-        ESP_LOGE(TAG, "Roll PID controller initalization failed %s\n", esp_err_to_name(err));
-        return err;
+        ESP_LOGE(TAG, "Roll PID controller initalization failed %s", esp_err_to_name(err));
+        goto cleanup;
     }
 
     err = pid_init (pitch, config->pitch_Kp, config->pitch_Ki, config->pitch_Kd, config->deriv_time_const, config->pid_cmd_min, config->pid_cmd_max, config->pitch_servo_center);
     if (err != ESP_OK){
-        ESP_LOGE(TAG, "Pitch PID controller initalization failed %s\n", esp_err_to_name(err));
-        return err;
+        ESP_LOGE(TAG, "Pitch PID controller initalization failed %s", esp_err_to_name(err));
+        goto cleanup;
     }
 
     ESP_LOGI(TAG, "Initialization Successul");
     return ESP_OK;
+
+    cleanup: 
+    {
+        esp_err_t cleanup_err = motor_del();
+        if(cleanup_err != ESP_OK){
+            ESP_LOGE(TAG, "Motor cleanup failed: %s", esp_err_to_name(cleanup_err));
+        }
+        return err;
+    }
 }
 
 
@@ -45,13 +47,13 @@ esp_err_t stabilization_reset(pid_controller_t *roll, pid_controller_t *pitch)
 {
     esp_err_t err = pid_reset(roll);
     if (err != ESP_OK){
-        ESP_LOGE(TAG, "PID reset failed %s\n", esp_err_to_name(err));
+        ESP_LOGE(TAG, "PID reset failed %s", esp_err_to_name(err));
         return err;
     }
     
     err = pid_reset(pitch);
     if (err != ESP_OK){
-        ESP_LOGE(TAG, "PID reset failed %s\n", esp_err_to_name(err));
+        ESP_LOGE(TAG, "PID reset failed %s", esp_err_to_name(err));
         return err;
     }
 
@@ -106,14 +108,14 @@ esp_err_t stabilization_update(pid_controller_t *roll, pid_controller_t *pitch, 
     esp_err_t err = pid_calculate(roll, roll_imu_angle, roll_light_angle, &roll_cmd, dt);
 
     if(err != ESP_OK){
-        ESP_LOGW(TAG, "Roll PID skipped, calculation error: %s\n", esp_err_to_name(err));
+        ESP_LOGW(TAG, "Roll PID skipped, calculation error: %s", esp_err_to_name(err));
         return err;
     }
 
     err = pid_calculate(pitch, pitch_imu_angle, pitch_light_angle, &pitch_cmd, dt);
 
     if(err != ESP_OK){
-        ESP_LOGW(TAG, "Pitch PID skipped, calculation error: %s\n", esp_err_to_name(err));
+        ESP_LOGW(TAG, "Pitch PID skipped, calculation error: %s", esp_err_to_name(err));
         return err;
     }
 
