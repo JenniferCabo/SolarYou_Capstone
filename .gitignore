@@ -15,3 +15,11 @@ __test*.c
 # arduino dependencies
 ESP_SolarYou/.downloads/
 ESP_SolarYou/.cache/
+# Local build/test outputs for BLE integration.
+ESP_SolarYou/build-*/
+ESP_SolarYou/managed_components/
+artifacts/
+.validation-dashboard/
+.component-cache/
+tests/bin/
+__pycache__/

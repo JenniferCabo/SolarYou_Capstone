@@ -23,6 +23,26 @@ config SOLARYOU_RUNTIME_FULL_CONTROL
         control path. This mode should be selected once all hardware
         connections and GPIO assignments have been verified.
 
+config SOLARYOU_RUNTIME_ESP_ONLY_TEST
+    bool "ESP-only USB/Bluetooth test (generated readings, no sensors or motors)"
+    depends on BT_NIMBLE_ENABLED
+    select SOLARYOU_BLE_TELEMETRY
+    help
+        Send generated USB and Bluetooth readings without initializing sensors
+        or motors. Packets include simulated=true; Bluetooth advertises as
+        SolarYou-ESP-TEST. Use this mode to test streaming, rate settings,
+        and reconnection without sensor hardware.
+
 endchoice
+
+config SOLARYOU_BLE_TELEMETRY
+    bool "Bluetooth Low Energy dashboard telemetry"
+    depends on BT_NIMBLE_ENABLED
+    default n
+    help
+        Advertise as SolarYou-ASSTP and send the existing sensor/control
+        readings to the BLE dashboard. USB telemetry remains available.
+        The dashboard can select 1, 2, 5 or 10 outgoing updates per second;
+        this does not change the sensor or control-loop sampling periods.
 
 endmenu

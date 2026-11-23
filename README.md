@@ -1,5 +1,8 @@
 # SolarYou — Active Stabilization and Solar Tracking Platform (ASSTP)
 
+BLE setup: [integration guide](BLE_INTEGRATION.md) and
+[test results](BLE_VALIDATION.md).
+
 **Project:** Senior Design II | **Status:** Rev1 sensor/control integration and bench validation | **Snapshot reviewed:** October 9, 2026
 
 SolarYou is a two-axis photovoltaic platform intended to reject wave-induced pitch/roll disturbances while adjusting its orientation toward the strongest available sunlight. This repository contains the ESP32 firmware, sensor interface, motor control, PID controller, and supporting vendor libraries for the prototype.
