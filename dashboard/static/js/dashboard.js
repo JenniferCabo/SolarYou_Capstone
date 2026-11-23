@@ -58,7 +58,7 @@ const washOf = (key) => () => colors[key] + "1f"; // same color, about 12% opaci
 
 // ---- state ----
 
-const KEYS = ["pitch", "roll", "power", "pitch_target", "roll_target"];
+const KEYS = ["pitch", "roll", "power", "pitch_target", "roll_target", "voltage", "current"];
 const latest = {};
 for (const key of KEYS) latest[key] = { value: null, at: 0 };
 
@@ -73,7 +73,7 @@ let lastPowerPointAt = 0;
 let energyWh = 0;
 let lastPowerForEnergy = null;
 let runNumber = 1;
-const csvRows = [];          // [time, run, pitch, roll, power, pitch_target, roll_target]
+const csvRows = [];          // [time, run, pitch, roll, power, pitch_target, roll_target, voltage, current, avg_power]
 let csvDropped = false;
 
 let serverStatus = { status: "connecting" };
@@ -174,7 +174,8 @@ function handleReading(reading) {
 
     // CSV keeps every message as received (missing and null both become blank cells)
     csvRows.push([now, runNumber, reading.pitch, reading.roll, reading.power,
-                  reading.pitch_target, reading.roll_target]);
+                  reading.pitch_target, reading.roll_target,
+                  reading.voltage, reading.current, reading.avg_power]);
     if (csvRows.length > CSV_MAX_ROWS) {
         csvRows.splice(0, Math.floor(CSV_MAX_ROWS / 10));
         csvDropped = true;
@@ -385,6 +386,11 @@ function renderReadouts(now) {
     el("rollSub").innerText = rollTarget === null ? "degrees" : "target " + formatDegrees(rollTarget, 1);
     const power = freshValue("power", now);
     el("powerValue").innerText = power === null ? "--" : power.toFixed(2);
+    // voltage and current under the power number, only when the firmware sends them
+    const volts = freshValue("voltage", now);
+    const amps = freshValue("current", now);
+    el("powerDetail").innerText = volts === null || amps === null
+        ? "" : volts.toFixed(2) + " V, " + amps.toFixed(3) + " A";
 }
 
 // Labels follow whether a target is arriving, so the page never calls
@@ -534,8 +540,9 @@ function csvCell(value) {
 }
 
 function csvFromRows(rows) {
-    // target columns go last so scripts written for the older file still work
-    const lines = ["time_iso,elapsed_s,run,pitch_deg,roll_deg,power_w,pitch_target_deg,roll_target_deg"];
+    // newer columns go last so scripts written for older files still work
+    const lines = ["time_iso,elapsed_s,run,pitch_deg,roll_deg,power_w,pitch_target_deg,roll_target_deg," +
+                   "voltage_v,current_a,avg_power_w"];
     const start = rows.length ? rows[0][0] : 0;
     for (const row of rows) {
         lines.push([
@@ -547,6 +554,9 @@ function csvFromRows(rows) {
             csvCell(row[4]),
             csvCell(row[5]),
             csvCell(row[6]),
+            csvCell(row[7]),
+            csvCell(row[8]),
+            csvCell(row[9]),
         ].join(","));
     }
     return lines.join("\n") + "\n";

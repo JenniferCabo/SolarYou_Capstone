@@ -50,9 +50,10 @@ class ReadingLogTests(unittest.TestCase):
         log.close()
         rows = self.rows(self.files()[0])
         self.assertEqual(rows[0], ["time_iso", "elapsed_s", "run", "pitch_deg", "roll_deg",
-                                   "power_w", "pitch_target_deg", "roll_target_deg"])
-        self.assertEqual(rows[1][2:], ["1", "1.25", "-2.0", "", "", ""])
-        self.assertEqual(rows[2][2:], ["1", "", "", "0.0", "8.0", "-4.0"])
+                                   "power_w", "pitch_target_deg", "roll_target_deg",
+                                   "voltage_v", "current_a", "avg_power_w"])
+        self.assertEqual(rows[1][2:], ["1", "1.25", "-2.0", "", "", "", "", "", ""])
+        self.assertEqual(rows[2][2:], ["1", "", "", "0.0", "8.0", "-4.0", "", "", ""])
         self.assertTrue(rows[1][0].endswith("Z"))
 
     def test_new_run_starts_a_new_file_with_that_run_number(self):

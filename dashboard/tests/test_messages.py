@@ -86,6 +86,19 @@ class NormalizeTests(unittest.TestCase):
                          {"pitch": 10.5, "roll": -3.0, "power": 1.2,
                           "pitch_target": 12.0, "roll_target": None})
 
+    def test_power_details_from_the_current_firmware_line(self):
+        line = ('{"pitch":-0.60,"roll":0.00,"voltage":12.104,"current":0.750,'
+                '"power":9.078,"avg power":8.912}')
+        self.assertEqual(dashboard.normalize_reading(json.loads(line)),
+                         {"pitch": -0.6, "roll": 0.0, "power": 9.078, "voltage": 12.104,
+                          "current": 0.75, "avg_power": 8.912})
+
+    def test_power_details_null_when_the_sensor_fails(self):
+        line = '{"pitch":1.00,"roll":2.00,"voltage":null,"current":null,"power":null,"avg power":null}'
+        result = dashboard.normalize_reading(json.loads(line))
+        self.assertIsNone(result["voltage"])
+        self.assertIsNone(result["avg_power"])
+
     def test_target_is_not_looked_up_inside_a_sensor_group(self):
         self.assertEqual(dashboard.normalize_reading({"imu": {"pitch_target": 5}}), {})
 

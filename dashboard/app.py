@@ -150,7 +150,7 @@ def run_data_source(fn, config):
         set_connection_status("error", reason)
 
 
-# ---- turning whatever arrives into {pitch, roll, power} ----
+# ---- turning whatever arrives into the dashboard's fields ----
 
 MISSING = object()
 
@@ -159,9 +159,12 @@ FIELDS = (
     ("pitch", "pitch", "imu", "pitch_deg"),
     ("roll", "roll", "imu", "roll_deg"),
     ("power", "power", "power", "power_w"),
+    # Optional power details. The firmware on main spells average power
+    # "avg power" (with a space), so both spellings are read.
     ("voltage", "voltage", None, None),
     ("current", "current", None, None),
     ("avg_power", "avg_power", None, None),
+    ("avg_power", "avg power", None, None),
     # Optional. The angle the controller is steering toward (the sun target).
     # When these arrive, the page measures error from the target instead of
     # tilt from level. Firmware that never sends them gets the level view.
@@ -171,7 +174,8 @@ FIELDS = (
 # A message with none of these is not something the dashboard can use.
 # (light is recognized so a light-only message is ignored quietly, since
 # the dashboard doesn't display it yet.)
-RECOGNIZED_KEYS = {"pitch", "roll", "power", "imu", "light", "pitch_target", "roll_target"}
+RECOGNIZED_KEYS = {"pitch", "roll", "power", "imu", "light", "pitch_target", "roll_target",
+                   "voltage", "current", "avg_power", "avg power"}
 
 
 def clean_number(value):
@@ -205,10 +209,10 @@ def pick(reading, flat_key, group_key, nested_key):
 def normalize_reading(reading):
     """
     Convert a message from the ESP32 into the flat shape dashboard.js
-    uses: pitch, roll, power, and the optional targets. The firmware can
-    send that flat shape or group fields by sensor the way Jennifer's
-    draft does (imu.pitch_deg, imu.roll_deg, power.power_w). If the field
-    names change, FIELDS above is the only thing to edit.
+    uses: pitch, roll, power, and the optional power details and targets.
+    The firmware can send that flat shape or group fields by sensor the way
+    Jennifer's draft does (imu.pitch_deg, imu.roll_deg, power.power_w). If
+    the field names change, FIELDS above is the only thing to edit.
 
     A field the message does not mention at all is left out of the result,
     so the dashboard keeps showing its last value for a moment. A field
@@ -266,8 +270,10 @@ def emit_reading(reading, raw):
 
 # ---- saving readings to a file ----
 
-LOG_FIELDS = ("pitch", "roll", "power", "pitch_target", "roll_target")
-LOG_HEADER = "time_iso,elapsed_s,run,pitch_deg,roll_deg,power_w,pitch_target_deg,roll_target_deg\n"
+LOG_FIELDS = ("pitch", "roll", "power", "pitch_target", "roll_target", "voltage", "current", "avg_power")
+# New columns go at the end so scripts written for older files still work.
+LOG_HEADER = ("time_iso,elapsed_s,run,pitch_deg,roll_deg,power_w,pitch_target_deg,roll_target_deg,"
+              "voltage_v,current_a,avg_power_w\n")
 
 
 class ReadingLog:
@@ -586,6 +592,24 @@ def pick_serial_port(ports):
                   describe_ports(usb) + ". Pass --serial-port")
 
 
+def choose_serial_port(configured, ports):
+    """
+    Which port to open this time. A port picked by hand that has disappeared
+    is usually the same board back under a new name: on Linux a board that
+    resets while the port is still open comes back as ttyACM1 instead of
+    ttyACM0. So if the hand-picked port is gone, look for the board by its
+    USB ID instead of waiting for a name that won't come back.
+    """
+    if configured.lower() == "auto":
+        return pick_serial_port(ports)
+    if "://" in configured or os.name == "nt" or os.path.exists(configured):
+        return configured, "from settings"
+    port, how = pick_serial_port(ports)
+    if port is None:
+        return configured, "from settings"  # opening it reports that it's missing
+    return port, f"was {configured}"
+
+
 def port_group(port):
     """
     The group that owns a serial port on Linux: dialout on Ubuntu and Debian,
@@ -651,6 +675,7 @@ def serial_data_loop(config):
 
     configured = config.get("serial_port") or "auto"
     baud = int(config.get("serial_baud", 115200))
+    idle_limit = float(config.get("serial_idle_timeout", 10))
     last_problem = None
 
     def report_problem(reason):
@@ -662,14 +687,11 @@ def serial_data_loop(config):
         set_connection_status("reconnecting", reason)
 
     while True:
-        port = configured
-        how = "from settings"
-        if configured.lower() == "auto":
-            port, how = pick_serial_port(list_ports.comports())
-            if port is None:
-                report_problem(how)
-                time.sleep(RETRY_SECONDS)
-                continue
+        port, how = choose_serial_port(configured, list_ports.comports())
+        if port is None:
+            report_problem(how)
+            time.sleep(RETRY_SECONDS)
+            continue
 
         ser = None
         try:
@@ -680,6 +702,7 @@ def serial_data_loop(config):
 
             splitter = SerialLines()
             opened_at = time.monotonic()
+            last_byte_at = opened_at
             any_bytes = False
             json_lines = 0
             last_other_line = None
@@ -689,6 +712,7 @@ def serial_data_loop(config):
                 chunk = ser.read(ser.in_waiting or 1)
                 if chunk:
                     any_bytes = True
+                    last_byte_at = time.monotonic()
                     for line in splitter.feed(chunk):
                         data = json_from_serial_line(line)
                         if data:
@@ -698,6 +722,14 @@ def serial_data_loop(config):
                             process_reading(data)
                         elif line.strip():
                             last_other_line = line.strip()
+
+                # Readings were arriving and then stopped, but the port never
+                # reported an error. This can happen after a board reset,
+                # when the old port handle stays open but goes silent.
+                # Reopening picks the board up again.
+                if json_lines and time.monotonic() - last_byte_at > idle_limit:
+                    raise serial.SerialException(
+                        f"no data for {idle_limit:g} seconds")
 
                 # A connection that stays green with nothing on screen is the
                 # most confusing failure, so say what is (or isn't) arriving.

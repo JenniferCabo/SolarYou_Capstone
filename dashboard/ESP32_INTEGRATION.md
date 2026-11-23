@@ -56,6 +56,8 @@ The grouped shape matches `draft_sensor_message.json`. Extra fields
 | Power | `power` | `power.power_w` | watts |
 | Pitch target (optional) | `pitch_target` | | degrees |
 | Roll target (optional) | `roll_target` | | degrees |
+| Voltage, current (optional) | `voltage`, `current` | | volts, amps |
+| Average power (optional) | `avg_power` | | watts. Saved to the CSV, not shown. |
 
 | In the message | On screen |
 |---|---|
@@ -105,8 +107,12 @@ I (1234) telemetry: {"pitch":1.0,"roll":2.0}
   RTS in the same order `idf.py monitor --no-reset` uses.
 - The Heltec V4 uses native USB, which ignores the baud rate. A board with
   a USB-serial chip has to match the firmware (115200 by default).
-- After a reset or reflash the port may come back under a new name. The
-  dashboard retries every 2 s and finds it again in auto mode.
+- After a reset or reflash the port may come back under a new name (on
+  Linux, `/dev/ttyACM0` becomes `/dev/ttyACM1`). The dashboard retries
+  every 2 s and finds the board again by its USB ID, even if a port was
+  given with `--serial-port`.
+- If readings stop for 10 s without the port reporting an error, the
+  dashboard closes and reopens it (`serial_idle_timeout`).
 - If the port is open but nothing usable arrives for 8 s, the terminal
   says whether nothing is coming in (press RST, the board may be in the
   bootloader) or lines arrive without sensor JSON (the last one is shown).
@@ -115,7 +121,7 @@ At 115200 baud a USB-serial chip carries about 11,500 bytes a second. The
 flat line (about 42 bytes) at 10 a second uses about 4%. Jennifer's full
 `sensor_json,` line (860 to 950 bytes) at 10 a second uses about 80%, so
 keep that one to once or twice a second. Print from the main loop, not
-from inside the 50 Hz control step.
+from inside the 20 Hz control step.
 
 Jennifer's standalone sensor app (`SolarYou_Sensor`) also works: turn on
 `SY_CONSOLE_PRINT_JSON`.
@@ -165,7 +171,7 @@ connects, and subscribes to the telemetry characteristic.
   with a 6-byte header and joined back together on the dashboard side.
 - Send rate: writing `{"set_rate_hz":5}` asks for 5 a second, and reading
   returns `{"rate_hz":5}`. Allowed rates are 1, 2, 5, and 10. It only
-  changes how often readings are sent, not the 50 Hz control loop.
+  changes how often readings are sent, not the 20 Hz control loop.
 - Don't put `rate_hz` in regular telemetry. The dashboard treats any
   notification with it as a rate reply.
 - Firmware without the rate characteristic still works; the selector says
@@ -183,6 +189,7 @@ Reference: https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/n
 |---|---|---|---|
 | `serial_port` | serial | `auto` | `auto`, a port name, or a URL like `rfc2217://localhost:4000` |
 | `serial_baud` | serial | 115200 | ignored by native USB |
+| `serial_idle_timeout` | serial | 10 | seconds without data before reopening the port |
 | `wifi_url` | wifi | | must start with `ws://` |
 | `wifi_idle_timeout` | wifi | 10 | seconds of silence before reconnecting |
 | `ble_name` | ble | | advertised device name |
@@ -237,7 +244,8 @@ tab closes is harmless.
 
 | Situation | What happens |
 |---|---|
-| Cable unplugged, board reset or reflashed | retries every 2 s, finds the port again |
+| Cable unplugged, board reset or reflashed | retries every 2 s, finds the board again even under a new port name |
+| Port stays open but goes silent | reopens it after 10 s |
 | Another program has the serial port | says so once, connects when it's released |
 | Board loses power or WiFi drops | reconnects after 10 s of silence |
 | BLE link drops | rescans and reconnects |

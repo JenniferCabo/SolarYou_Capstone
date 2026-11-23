@@ -97,5 +97,144 @@ class ErrorMessageTests(unittest.TestCase):
         self.assertEqual(dashboard.port_group("/dev/not-a-real-port"), "dialout")
 
 
+class ChoosePortTests(unittest.TestCase):
+    def test_hand_picked_port_that_exists_is_used(self):
+        here = os.path.abspath(__file__)  # any path that exists
+        self.assertEqual(dashboard.choose_serial_port(here, [])[0], here)
+
+    @unittest.skipIf(os.name == "nt", "port names aren't file paths on Windows")
+    def test_hand_picked_port_gone_finds_the_board_under_its_new_name(self):
+        found, how = dashboard.choose_serial_port("/dev/ttyACM0", [port("/dev/ttyACM1", 0x303A)])
+        self.assertEqual(found, "/dev/ttyACM1")
+        self.assertEqual(how, "was /dev/ttyACM0")
+
+    @unittest.skipIf(os.name == "nt", "port names aren't file paths on Windows")
+    def test_hand_picked_port_gone_and_no_board_keeps_trying_it(self):
+        self.assertEqual(dashboard.choose_serial_port("/dev/ttyACM0", [])[0], "/dev/ttyACM0")
+
+    def test_network_ports_are_never_replaced(self):
+        url = "rfc2217://localhost:4000"
+        self.assertEqual(dashboard.choose_serial_port(url, [port("/dev/ttyACM1", 0x303A)])[0], url)
+
+
+class FakePort:
+    """A serial port that plays back a script: bytes to return, then silence or an error."""
+
+    def __init__(self, name, script):
+        self.name = name
+        self.script = list(script)
+        self.in_waiting = 0
+        self.closed = False
+
+    def read(self, size):
+        if not self.script:
+            return b""
+        step = self.script.pop(0)
+        if isinstance(step, Exception):
+            raise step
+        return step
+
+    def close(self):
+        self.closed = True
+
+
+class StopLoop(Exception):
+    pass
+
+
+@unittest.skipIf(os.name == "nt", "port names aren't file paths on Windows")
+class ReconnectTests(unittest.TestCase):
+    """Runs serial_data_loop against fake ports to check it recovers after a board reset."""
+
+    def run_loop(self, config, ports_by_attempt, scripts, clock_step=0.0, max_sleeps=3):
+        import serial as real_serial
+        import serial.tools.list_ports  # noqa: F401  (loads real_serial.tools)
+
+        opened = []
+        attempts = {"n": 0}
+        fake_now = {"t": 0.0}
+
+        def comports():
+            index = min(attempts["n"], len(ports_by_attempt) - 1)
+            return ports_by_attempt[index]
+
+        def open_port(serial_module, name, baud):
+            attempts["n"] += 1
+            if not scripts:
+                raise StopLoop()
+            fake = FakePort(name, scripts.pop(0))
+            opened.append(fake)
+            return fake
+
+        def sleep(seconds):
+            sleeps["n"] += 1
+            if sleeps["n"] > max_sleeps:
+                raise StopLoop()
+
+        def monotonic():
+            fake_now["t"] += clock_step
+            return fake_now["t"]
+
+        sleeps = {"n": 0}
+        readings = []
+        saved = (dashboard.open_serial, dashboard.process_reading, dashboard.set_connection_status,
+                 dashboard.time.sleep, dashboard.time.monotonic, real_serial.tools.list_ports.comports)
+        dashboard.open_serial = open_port
+        dashboard.process_reading = readings.append
+        dashboard.set_connection_status = lambda *a, **k: None
+        dashboard.time.sleep = sleep
+        dashboard.time.monotonic = monotonic
+        real_serial.tools.list_ports.comports = comports
+        printed = []
+        dashboard.print = lambda *a, **k: printed.append(" ".join(str(x) for x in a))
+        try:
+            dashboard.serial_data_loop(config)
+        except StopLoop:
+            pass
+        finally:
+            (dashboard.open_serial, dashboard.process_reading, dashboard.set_connection_status,
+             dashboard.time.sleep, dashboard.time.monotonic,
+             real_serial.tools.list_ports.comports) = saved
+            del dashboard.print
+        return opened, readings, printed
+
+    def test_reset_renames_the_port_and_the_dashboard_follows(self):
+        import serial
+        line = b'{"pitch":1.0,"roll":2.0}\n'
+        lost = serial.SerialException("device reports readiness to read but returned no data")
+        opened, readings, printed = self.run_loop(
+            {"serial_port": "/dev/ttyACM0"},
+            ports_by_attempt=[[port("/dev/ttyACM1", 0x303A)]],
+            scripts=[[line, lost], [line, line, lost]],
+        )
+        self.assertEqual([p.name for p in opened], ["/dev/ttyACM1", "/dev/ttyACM1"])
+        self.assertEqual(len(readings), 3)
+        self.assertTrue(all(p.closed for p in opened))
+        self.assertTrue(any("(was /dev/ttyACM0)" in p for p in printed))
+
+    def test_silent_port_after_data_is_reopened(self):
+        line = b'{"pitch":1.0,"roll":2.0}\n'
+        opened, readings, printed = self.run_loop(
+            {"serial_port": "auto", "serial_idle_timeout": 10},
+            ports_by_attempt=[[port("/dev/ttyACM0", 0x303A)]],
+            scripts=[[line] + [b""] * 50, [line]],
+            clock_step=1.0,
+            max_sleeps=1,
+        )
+        self.assertGreaterEqual(len(opened), 2)
+        self.assertTrue(opened[0].closed)
+        self.assertTrue(any("no data for 10 seconds" in p for p in printed))
+
+    def test_quiet_board_that_never_sent_data_is_not_reopened(self):
+        opened, readings, printed = self.run_loop(
+            {"serial_port": "auto"},
+            ports_by_attempt=[[port("/dev/ttyACM0", 0x303A)]],
+            scripts=[[b"boot log line\n"] + [b""] * 30 + [StopLoop()]],
+            clock_step=1.0,
+        )
+        self.assertEqual(len(opened), 1)
+        self.assertFalse(any("reopening" in p for p in printed))
+
+
 if __name__ == "__main__":
     unittest.main()

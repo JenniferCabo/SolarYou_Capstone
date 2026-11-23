@@ -66,7 +66,7 @@ A missing field is reported on the badge and in the terminal.
 | Part | Shows |
 |---|---|
 | Pitch, Roll | latest angles. `--` means the sensor reported invalid or nothing arrived for 5 s. |
-| Power | latest reading, with the 60 s average under it |
+| Power | latest reading, with the 60 s average and the panel voltage and current under it |
 | Energy | power added up since the page opened or the last New run |
 | Pitch & Roll chart | last 30 s |
 | Tilt from level | how far the panel is from flat, a bubble level with a short trail, RMS tilt over 30 s, and the share of readings within 2° |
