@@ -6,15 +6,19 @@ which it can write.
 
 ## Quick start
 
-**BLE** (Jennifer's firmware): flash it, make sure `config.json` has the
-BLE fields from `config.example.json`, then
+**BLE** (Jennifer's firmware): build it with the BLE settings
+(`sdkconfig.ble.defaults`; see `BLE_INTEGRATION.md` in the repo root) and
+flash it. Make sure `config.json` has the BLE fields from
+`config.example.json`, then
 
 ```
 python app.py --source ble
 ```
 
-The board advertises as `SolarYou-ASSTP`. The first scan on a Mac may ask
-for Bluetooth permission.
+The board advertises as `SolarYou-ASSTP` once its sensors pass their
+startup checks. The first scan on a Mac may ask for Bluetooth permission.
+BLE messages carry pitch, roll, power and the targets; voltage and current
+only come over serial.
 
 **Serial**: close `idf.py monitor` (only one program can hold the port),
 plug the board in with a data cable, then
@@ -231,7 +235,7 @@ Reference: https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/n
 | `Dropped a message (no pitch, roll, power, or imu field)` | different field names |
 | `no data for 10 seconds` | ESP32 stopped pushing or rebooted |
 | `characteristic ... was not found` | UUID byte order (see BLE above) |
-| `Could not find BLE device` | not advertising, different name, or Bluetooth off |
+| `Could not find BLE device` | not advertising, different name, or Bluetooth off. If the board is powered, check its USB log: BLE only starts after the sensor startup checks pass. |
 | `Bluetooth device is turned off` | turn Bluetooth on. Can also show once at startup on a Mac. |
 | `Handshake status 404` | wrong path in `wifi_url` |
 | `Port 5001 is already in use` | another copy is running, or use `--port 5002` |
