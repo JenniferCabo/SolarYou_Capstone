@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 .DS_Store
-=======
 # VS code junk
 .vscode/
 
@@ -18,4 +16,3 @@ __test*.c
 # arduino dependencies
 ESP_SolarYou/.downloads/
 ESP_SolarYou/.cache/
->>>>>>> origin/main
