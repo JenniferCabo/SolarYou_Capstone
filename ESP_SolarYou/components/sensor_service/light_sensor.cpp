@@ -1,0 +1,176 @@
+#include "light_sensor.h"
+
+#include <Arduino.h>
+#include <cmath>
+#include "component_config.h"
+#include "sensor_math.h"
+#include "board_config.h"
+
+static bool initialized = false;
+static bool neutralValid = false;
+static float neutralPitch = 0.0f;
+static float neutralRoll = 0.0f;
+static sensor_health_t health;
+
+static bool hasHardwareFault(sensor_fault_flags_t faults)
+{
+    const sensor_fault_flags_t hardwareFaults = SENSOR_FAULT_CHANNEL_OPEN |
+        SENSOR_FAULT_CHANNEL_SHORT | SENSOR_FAULT_CHANNEL_STUCK;
+    return (faults & hardwareFaults) != SENSOR_FAULT_NONE;
+}
+
+static bool readRaw(LightRawReading &reading, uint32_t spacingUs = 0)
+{
+    if (!initialized) return false;
+    uint32_t tl = 0, tr = 0, bl = 0, br = 0;
+    for (size_t i = 0; i < LIGHT_AVERAGE_SETS; ++i) {
+        tl += analogRead(LIGHT_TOP_LEFT_GPIO);
+        tr += analogRead(LIGHT_TOP_RIGHT_GPIO);
+        bl += analogRead(LIGHT_BOTTOM_LEFT_GPIO);
+        br += analogRead(LIGHT_BOTTOM_RIGHT_GPIO);
+        if (spacingUs) delayMicroseconds(spacingUs);
+    }
+    reading.topLeft = static_cast<uint16_t>(tl / LIGHT_AVERAGE_SETS);
+    reading.topRight = static_cast<uint16_t>(tr / LIGHT_AVERAGE_SETS);
+    reading.bottomLeft = static_cast<uint16_t>(bl / LIGHT_AVERAGE_SETS);
+    reading.bottomRight = static_cast<uint16_t>(br / LIGHT_AVERAGE_SETS);
+    sensorHealthRecordSample(&health, millis());
+    return true;
+}
+
+void lightSensorBegin()
+{
+    sensorHealthInitialize(&health, SENSOR_STATE_INITIALIZING);
+    analogReadResolution(12);
+    analogSetAttenuation(ADC_11db);
+    pinMode(LIGHT_TOP_LEFT_GPIO, INPUT);
+    pinMode(LIGHT_TOP_RIGHT_GPIO, INPUT);
+    pinMode(LIGHT_BOTTOM_LEFT_GPIO, INPUT);
+    pinMode(LIGHT_BOTTOM_RIGHT_GPIO, INPUT);
+    initialized = true;
+    neutralValid = false;
+    sensorHealthRaiseFaults(&health, SENSOR_FAULT_CALIBRATION_REQUIRED);
+    sensorHealthSetState(&health, SENSOR_STATE_CALIBRATING);
+}
+
+bool lightSensorCaptureNeutral(size_t sampleCount)
+{
+    if (!initialized || sampleCount == 0U) {
+        sensorHealthRaiseFaults(&health, SENSOR_FAULT_CALIBRATION_REQUIRED);
+        return false;
+    }
+    sensorHealthSetState(&health, SENSOR_STATE_CALIBRATING);
+
+    constexpr uint32_t kCalSpacingUs = 20000 / LIGHT_AVERAGE_SETS;
+
+    float pitchSum = 0.0f, rollSum = 0.0f;
+    float pitchSqSum = 0.0f, rollSqSum = 0.0f;
+    float pitchMin = INFINITY, pitchMax = -INFINITY;
+    float rollMin = INFINITY, rollMax = -INFINITY;
+
+    for (size_t i = 0; i < sampleCount; ++i) {
+        LightRawReading raw;
+        if (!readRaw(raw, kCalSpacingUs)) {
+            ESP_LOGE("LIGHT", "readRaw failed at sample %u of %u",
+                     (unsigned)i, (unsigned)sampleCount);
+            return false;
+        }
+
+        float pitch = 0.0f, roll = 0.0f;
+        const sensor_fault_flags_t faults = evaluateLightReading(
+            raw, LIGHT_MIN_TOTAL_COUNT, LIGHT_SATURATION_COUNT,
+            LIGHT_OPEN_COUNT, LIGHT_SHORT_COUNT, pitch, roll);
+        if (faults != SENSOR_FAULT_NONE) {
+            ESP_LOGE("LIGHT", "Fault 0x%x at sample %u: TL=%u TR=%u BL=%u BR=%u",
+                     (unsigned)faults, (unsigned)i,
+                     (unsigned)raw.topLeft, (unsigned)raw.topRight,
+                     (unsigned)raw.bottomLeft, (unsigned)raw.bottomRight);
+            sensorHealthSetActiveFaults(
+                &health, faults | SENSOR_FAULT_CALIBRATION_REQUIRED);
+            return false;
+        }
+
+        if (std::fabs(pitch) > LIGHT_CAL_MAX_ABS_ERROR ||
+            std::fabs(roll) > LIGHT_CAL_MAX_ABS_ERROR) {
+            ESP_LOGE("LIGHT", "Unbalanced at sample %u: pitch %.3f roll %.3f (limit %.3f)",
+                     (unsigned)i, pitch, roll, (double)LIGHT_CAL_MAX_ABS_ERROR);
+            sensorHealthSetActiveFaults(
+                &health, SENSOR_FAULT_CALIBRATION_REQUIRED);
+            return false;
+        }
+
+
+
+
+        pitchSum += pitch;
+        rollSum += roll;
+        pitchSqSum += pitch * pitch;
+        rollSqSum += roll * roll;
+        pitchMin = std::fmin(pitchMin, pitch);
+        pitchMax = std::fmax(pitchMax, pitch);
+        rollMin = std::fmin(rollMin, roll);
+        rollMax = std::fmax(rollMax, roll);
+        delay(10);
+    }
+
+    const float n = static_cast<float>(sampleCount);
+    const float pitchMean = pitchSum / n;
+    const float rollMean = rollSum / n;
+    const float pitchStd = std::sqrt(std::fmax(0.0f, pitchSqSum / n - pitchMean * pitchMean));
+    const float rollStd = std::sqrt(std::fmax(0.0f, rollSqSum / n - rollMean * rollMean));
+
+    if (pitchStd > LIGHT_CAL_MAX_STDDEV || rollStd > LIGHT_CAL_MAX_STDDEV) {
+        ESP_LOGE("LIGHT", "Unstable: pitch std %.4f (spread %.3f), roll std %.4f (spread %.3f), limit %.4f",
+                 pitchStd, pitchMax - pitchMin, rollStd, rollMax - rollMin,
+                 (double)LIGHT_CAL_MAX_STDDEV);
+        sensorHealthRaiseFaults(&health, SENSOR_FAULT_CALIBRATION_UNSTABLE);
+        return false;
+    }
+
+    neutralPitch = pitchMean;
+    neutralRoll = rollMean;
+    neutralValid = true;
+    ESP_LOGI("LIGHT", "Calibrated: neutral pitch %.3f roll %.3f (std %.4f / %.4f)",
+             neutralPitch, neutralRoll, pitchStd, rollStd);
+    sensorHealthSetActiveFaults(&health, SENSOR_FAULT_NONE);
+    sensorHealthSetState(&health, SENSOR_STATE_VALID);
+    return true;
+}
+
+bool lightSensorReadCentered(LightReading &reading)
+{
+    reading = {{0, 0, 0, 0}, 0.0f, 0.0f, false};
+    if (!neutralValid || !readRaw(reading.raw)) {
+        sensorHealthRaiseFaults(&health, SENSOR_FAULT_CALIBRATION_REQUIRED);
+        sensorHealthSetState(&health, SENSOR_STATE_CALIBRATING);
+        return false;
+    }
+    float pitch = 0.0f, roll = 0.0f;
+    const sensor_fault_flags_t faults = evaluateLightReading(
+        reading.raw, LIGHT_MIN_TOTAL_COUNT, LIGHT_SATURATION_COUNT,
+        LIGHT_OPEN_COUNT, LIGHT_SHORT_COUNT, pitch, roll);
+    sensorHealthSetActiveFaults(&health, faults);
+    if (faults != SENSOR_FAULT_NONE) {
+        sensorHealthSetState(&health, hasHardwareFault(faults)
+            ? SENSOR_STATE_FAULT : SENSOR_STATE_DEGRADED);
+        return true;
+    }
+    reading.pitch = centerSensorValue(pitch, neutralPitch, LIGHT_PITCH_SIGN,
+                                      LIGHT_DEADBAND, -1.0f, 1.0f);
+    reading.roll = centerSensorValue(roll, neutralRoll, LIGHT_ROLL_SIGN,
+                                     LIGHT_DEADBAND, -1.0f, 1.0f);
+    reading.valid = true;
+    sensorHealthSetState(&health, SENSOR_STATE_VALID);
+    return true;
+}
+
+void lightSensorGetHealth(sensor_health_t &output)
+{
+    sensorHealthUpdateAge(&health, millis());
+    output = health;
+}
+
+void lightSensorClearLatchedFaults()
+{
+    sensorHealthClearLatched(&health);
+}

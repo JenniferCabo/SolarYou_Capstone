@@ -1,0 +1,170 @@
+#include "stabilization_task.h"
+#include "sensor_api.h"
+#include "system_state.h"
+#include <math.h>
+
+static const char *TAG = "Stabilization Task";
+
+
+esp_err_t stabilization_init(pid_controller_t *roll, pid_controller_t *pitch, const stab_config_t *config)
+{
+    if(roll == NULL || pitch == NULL || config == NULL){
+        return ESP_ERR_INVALID_ARG;
+    }
+    esp_err_t err = motor_init(config->roll_servo_center, config->pitch_servo_center);
+    if (err != ESP_OK){
+        ESP_LOGE(TAG, "Motor initalization failed %s", esp_err_to_name(err));
+        return err;
+    }
+
+    err  = pid_init (roll, config->roll_Kp, config->roll_Ki, config->roll_Kd, config->deriv_time_const, config->pid_cmd_min, config->pid_cmd_max, config->roll_servo_center);
+    if (err != ESP_OK){
+        ESP_LOGE(TAG, "Roll PID controller initalization failed %s", esp_err_to_name(err));
+        goto cleanup;
+    }
+
+    err = pid_init (pitch, config->pitch_Kp, config->pitch_Ki, config->pitch_Kd, config->deriv_time_const, config->pid_cmd_min, config->pid_cmd_max, config->pitch_servo_center);
+    if (err != ESP_OK){
+        ESP_LOGE(TAG, "Pitch PID controller initalization failed %s", esp_err_to_name(err));
+        goto cleanup;
+    }
+
+    ESP_LOGI(TAG, "Initialization Successul");
+    return ESP_OK;
+
+    cleanup: 
+    {
+        esp_err_t cleanup_err = motor_del();
+        if(cleanup_err != ESP_OK){
+            ESP_LOGE(TAG, "Motor cleanup failed: %s", esp_err_to_name(cleanup_err));
+        }
+        return err;
+    }
+}
+
+
+esp_err_t stabilization_reset(pid_controller_t *roll, pid_controller_t *pitch)
+{
+    esp_err_t err = pid_reset(roll);
+    if (err != ESP_OK){
+        ESP_LOGE(TAG, "PID reset failed %s", esp_err_to_name(err));
+        return err;
+    }
+    
+    err = pid_reset(pitch);
+    if (err != ESP_OK){
+        ESP_LOGE(TAG, "PID reset failed %s", esp_err_to_name(err));
+        return err;
+    }
+
+    ESP_LOGI(TAG, "Reset Successful");
+    return ESP_OK;
+}
+
+esp_err_t stabilization_update(pid_controller_t *roll, pid_controller_t *pitch, const stab_config_t *config, stab_output_t *output, float dt, float roll_light_angle, float pitch_light_angle)
+{
+    // argument validation
+    if(roll == NULL || pitch == NULL || output == NULL || config == NULL){
+        return ESP_ERR_INVALID_ARG;
+    }
+
+    if(!isfinite(roll_light_angle) || !isfinite(pitch_light_angle) || !isfinite(dt)){
+        return ESP_ERR_INVALID_ARG;
+    }
+
+    sensor_imu_sample_t imu = {0};
+
+    // imu validation
+    if(!sensor_adapter_read_imu(&imu) || !imu.valid){
+        ESP_LOGW(TAG, "IMU read failed - Sensor");
+        return ESP_ERR_INVALID_STATE;
+    }
+
+    if(!isfinite(imu.roll_deg) || !isfinite(imu.pitch_deg)){
+        ESP_LOGE(TAG, "Invalid IMU angles - Sensor");
+        return ESP_ERR_INVALID_STATE;        
+    }
+    
+    if(!imu.health.has_sample || imu.health.age_ms > config->imu_age_ms){
+        ESP_LOGW(TAG, "STALE IMU data: %u ms", imu.health.age_ms);
+        return ESP_ERR_INVALID_STATE;
+    }
+
+
+    float roll_cmd;
+    float pitch_cmd;
+
+    // fetch measured(IMU) and target(light) angles
+    float roll_imu_angle = imu.roll_deg;         //placeholder;
+    float pitch_imu_angle = imu.pitch_deg;      //placeholder;
+
+    float roll_offset_baseline = roll_light_angle + roll->servo_center;
+    float pitch_offset_baseline = pitch_light_angle + pitch->servo_center;
+
+    roll_offset_baseline  = fminf(fmaxf(roll_offset_baseline,  config->servo_roll_min),  config->servo_roll_max);
+    pitch_offset_baseline = fminf(fmaxf(pitch_offset_baseline, config->servo_pitch_min), config->servo_pitch_max);
+
+    // determine PID command
+    esp_err_t err = pid_calculate(roll, roll_imu_angle, roll_light_angle, &roll_cmd, dt);
+
+    if(err != ESP_OK){
+        ESP_LOGW(TAG, "Roll PID skipped, calculation error: %s", esp_err_to_name(err));
+        return err;
+    }
+
+    err = pid_calculate(pitch, pitch_imu_angle, pitch_light_angle, &pitch_cmd, dt);
+
+    if(err != ESP_OK){
+        ESP_LOGW(TAG, "Pitch PID skipped, calculation error: %s", esp_err_to_name(err));
+        return err;
+    }
+
+    // Determine allowed PID correction ranges
+    float roll_min_cmd = fmaxf(
+        config->pid_cmd_min,
+        config->servo_roll_min - roll_offset_baseline
+    );
+
+    float roll_max_cmd = fminf(
+        config->pid_cmd_max,
+        config->servo_roll_max - roll_offset_baseline
+    );
+
+    float pitch_min_cmd = fmaxf(
+        config->pid_cmd_min,
+        config->servo_pitch_min - pitch_offset_baseline
+    );
+
+    float pitch_max_cmd = fminf(
+        config->pid_cmd_max,
+        config->servo_pitch_max - pitch_offset_baseline
+    );
+
+    // Reject invalid command ranges
+    if (roll_min_cmd > roll_max_cmd ||
+        pitch_min_cmd > pitch_max_cmd ||
+        !isfinite(roll_cmd) ||
+        !isfinite(pitch_cmd)) {
+        return ESP_ERR_INVALID_STATE;
+    }
+
+    // Saturate PID corrections
+    roll_cmd = fminf(fmaxf(roll_cmd, roll_min_cmd), roll_max_cmd);
+    pitch_cmd = fminf(fmaxf(pitch_cmd, pitch_min_cmd), pitch_max_cmd);
+
+    // map PID command angles to servo angles
+    float servo_roll_angle = roll_cmd + roll_offset_baseline;
+    float servo_pitch_angle = pitch_cmd + pitch_offset_baseline;
+
+    err = command_motor_angle(servo_roll_angle, servo_pitch_angle);
+    if (err != ESP_OK){
+        return err;
+    }
+
+    output->roll_imu = roll_imu_angle;
+    output->pitch_imu = pitch_imu_angle;
+    output->roll_cmd = roll_cmd;
+    output->pitch_cmd = pitch_cmd;
+
+    return ESP_OK;
+}
