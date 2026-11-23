@@ -1,0 +1,10 @@
+.venv/
+tmp/
+.component-cache/
+**/build*/
+**/managed_components/
+**/__pycache__/
+**/config.json
+upstream-download.json
+missing-upstream.json
+*.log

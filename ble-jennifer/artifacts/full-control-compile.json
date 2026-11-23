@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "scope": "Full-control main and BLE bridge translation units; not a separate firmware link",
+  "sources": [
+    {
+      "source": "ESP_SolarYou.c",
+      "passed": true,
+      "compiler": "C:\\Espressif\\tools\\xtensa-esp-elf\\esp-14.2.0_20260121\\xtensa-esp-elf\\bin\\xtensa-esp32s3-elf-gcc.exe",
+      "output": ""
+    },
+    {
+      "source": "ble_app.c",
+      "passed": true,
+      "compiler": "C:\\Espressif\\tools\\xtensa-esp-elf\\esp-14.2.0_20260121\\xtensa-esp-elf\\bin\\xtensa-esp32s3-elf-gcc.exe",
+      "output": ""
+    }
+  ]
+}

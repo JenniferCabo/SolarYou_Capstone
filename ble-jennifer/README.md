@@ -1,10 +1,8 @@
 # ble-jennifer
 
-Download and extract [ble-jennifer.zip](ble-jennifer.zip) for the complete source and test files.
-
 BLE telemetry for SolarYou with adjustable sending rate, applied-rate confirmation, reconnection, and split-message support.
 
-Related documents: [BLE protocol](BLE_PROTOCOL.md), [patch instructions](APPLY_PATCHES.md), and [validation results](VALIDATION.md).
+Related documents: [BLE protocol](dashboard/dashboard/BLE_PROTOCOL.md), [patch instructions](patches/README.md), and [validation results](VALIDATION.md).
 
 ## Setup
 
@@ -86,11 +84,11 @@ On connection, the dashboard retries a temporarily failed rate check up to two m
 
 When a user selects 5 updates/second, the dashboard sends `{"set_rate_hz":5}` to the ESP32 through the added Bluetooth rate setting. It then reads the setting back; `{"rate_hz":5}` means the ESP32 reports that 5 updates/second is applied. The dashboard handles these messages automatically and confirms only when the returned setting matches the request. It attempts to restore the last confirmed rate after reconnecting during the running session. If that setting request fails while Bluetooth remains connected, readings continue and a rate error is shown. When the rate is unconfirmed, the dropdown shows "Choose a rate" so the same rate can be selected again directly.
 
-Whole JSON is sent when it fits the negotiated Bluetooth message size; otherwise it is split into smaller pieces. The included dashboard receiver code joins those pieces into one complete reading before displaying it and handles rate replies separately. Review the firmware and dashboard changes together. Exact framing is in [BLE_PROTOCOL.md](BLE_PROTOCOL.md).
+Whole JSON is sent when it fits the negotiated Bluetooth message size; otherwise it is split into smaller pieces. The included dashboard receiver code joins those pieces into one complete reading before displaying it and handles rate replies separately. Review the firmware and dashboard changes together. Exact framing is in [BLE_PROTOCOL.md](dashboard/dashboard/BLE_PROTOCOL.md).
 
 ## Integration and validation
 
-Apply the matching firmware and dashboard patches to the revisions listed in the [patch instructions](APPLY_PATCHES.md). Firmware integration adds one include and four BLE calls in `ESP_SolarYou.c`, the full-control INA219 startup warning/continue behavior, and CMake module/library entries.
+Apply the matching firmware and dashboard patches to the revisions listed in the [patch instructions](patches/README.md). Firmware integration adds one include and four BLE calls in `ESP_SolarYou.c`, the full-control INA219 startup warning/continue behavior, and CMake module/library entries.
 
 ### Changes to existing code
 

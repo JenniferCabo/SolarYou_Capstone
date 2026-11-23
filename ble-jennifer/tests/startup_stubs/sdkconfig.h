@@ -1,0 +1,1 @@
+/* Test compiler flags select the existing runtime mode. */
