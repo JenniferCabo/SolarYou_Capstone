@@ -10,7 +10,6 @@ extern "C" {
 #endif
 
 #define SY_BLE_DEVICE_NAME "SolarYou-ASSTP"
-#define SY_BLE_TEST_DEVICE_NAME "SolarYou-ESP-TEST"
 #define SY_BLE_SERVICE_UUID "47e8841f-04c9-4ae2-af68-a7b6f4eb293d"
 #define SY_BLE_TELEMETRY_UUID "f2d2680c-66bc-4e24-8eac-d8013a99320b"
 #define SY_BLE_RATE_UUID "f2d2680c-66bc-4e24-8eac-d8013a99320c"
@@ -21,8 +20,8 @@ extern "C" {
 
 typedef struct {
     float pitch, roll, power, pitch_target, roll_target;
+    float voltage, current, avg_power;
     bool imu_valid, power_valid, targets_valid;
-    bool simulated; /* Explicit marker for the separate ESP-only test mode. */
     uint32_t captured_ms; /* Internal freshness timestamp; never sent on wire. */
 } sy_telemetry_sample_t;
 

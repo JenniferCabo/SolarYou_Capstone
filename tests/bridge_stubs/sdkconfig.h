@@ -1,1 +1,0 @@
-/* Test builds select the existing runtime mode with compiler definitions. */

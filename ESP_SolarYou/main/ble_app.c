@@ -23,11 +23,6 @@ void ble_app_start(void)
         return;
     }
     started = true;
-#if CONFIG_SOLARYOU_RUNTIME_ESP_ONLY_TEST
-    snapshot.simulated = true;
-#else
-    snapshot.simulated = false;
-#endif
     snapshot.captured_ms = (uint32_t)(esp_timer_get_time() / 1000);
     ble_telemetry_publish(&snapshot);
 }
@@ -52,10 +47,15 @@ void ble_app_update_targets(float pitch, float roll, bool valid)
     last_targets_update_us = esp_timer_get_time();
 }
 
-void ble_app_update_power(float watts, bool valid)
+void ble_app_update_power(float voltage, float current, float watts,
+                          float avg_watts, bool valid)
 {
+    snapshot.voltage = voltage;
+    snapshot.current = current;
     snapshot.power = watts;
-    snapshot.power_valid = valid && isfinite(watts);
+    snapshot.avg_power = avg_watts;
+    snapshot.power_valid = valid && isfinite(voltage) && isfinite(current) &&
+        isfinite(watts) && isfinite(avg_watts);
     last_power_update_us = esp_timer_get_time();
 }
 

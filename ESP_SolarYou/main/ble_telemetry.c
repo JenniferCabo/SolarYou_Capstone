@@ -9,16 +9,13 @@
 
 static QueueHandle_t latest_queue;
 
-#if CONFIG_SOLARYOU_RUNTIME_ESP_ONLY_TEST
-#define ADVERTISED_DEVICE_NAME SY_BLE_TEST_DEVICE_NAME
-#else
 #define ADVERTISED_DEVICE_NAME SY_BLE_DEVICE_NAME
-#endif
 
 #include "nvs_flash.h"
 #include "nimble/nimble_port.h"
 #include "nimble/nimble_port_freertos.h"
 #include "host/ble_hs.h"
+#include "host/ble_att.h"
 #include "host/util/util.h"
 #include "services/gap/ble_svc_gap.h"
 #include "services/gatt/ble_svc_gatt.h"
@@ -182,7 +179,10 @@ static void host_task(void *arg)
 static bool send_json(const char *json, size_t length, const sy_ble_session_t *s,
                        uint16_t conn, uint16_t sequence)
 {
-    size_t limit = s->mtu > 3U ? (size_t)s->mtu - 3U : 0U;
+    /* Query the live ATT channel; the cached GAP event can still hold the
+     * default MTU after the connection has negotiated a larger value. */
+    uint16_t mtu = ble_att_mtu(conn);
+    size_t limit = mtu > 3U ? (size_t)mtu - 3U : 0U;
     if (limit > 512U) limit = 512U;
     size_t count = sy_ble_fragment_count(length, limit);
     for (size_t i = 0U; i < count; ++i) {

@@ -4,13 +4,13 @@
 #include <stdio.h>
 #include <string.h>
 
-static void number(char *out, size_t capacity, float value, bool valid)
+static void number(char *out, size_t capacity, float value, bool valid, int decimals)
 {
     /* Bound the representation as well as excluding nan/inf. This limit is far
        outside the physical sensor range, and prevents a corrupt float from
        expanding a bounded message into hundreds of characters. */
     if (valid && isfinite(value) && fabsf(value) <= 1000000.0f) {
-        (void)snprintf(out, capacity, "%.2f", (double)value);
+        (void)snprintf(out, capacity, "%.*f", decimals, (double)value);
     } else {
         (void)snprintf(out, capacity, "null");
     }
@@ -30,14 +30,19 @@ size_t sy_telemetry_format(char *out, size_t capacity, const sy_telemetry_sample
 {
     if (out == NULL || capacity == 0U || s == NULL) return 0U;
     char pitch[24], roll[24], power[24], pt[24], rt[24];
-    number(pitch, sizeof(pitch), s->pitch, s->imu_valid);
-    number(roll, sizeof(roll), s->roll, s->imu_valid);
-    number(power, sizeof(power), s->power, s->power_valid);
-    number(pt, sizeof(pt), s->pitch_target, s->targets_valid);
-    number(rt, sizeof(rt), s->roll_target, s->targets_valid);
+    char voltage[24], current[24], avg_power[24];
+    number(pitch, sizeof(pitch), s->pitch, s->imu_valid, 2);
+    number(roll, sizeof(roll), s->roll, s->imu_valid, 2);
+    number(power, sizeof(power), s->power, s->power_valid, 3);
+    number(pt, sizeof(pt), s->pitch_target, s->targets_valid, 2);
+    number(rt, sizeof(rt), s->roll_target, s->targets_valid, 2);
+    number(voltage, sizeof(voltage), s->voltage, s->power_valid, 3);
+    number(current, sizeof(current), s->current, s->power_valid, 3);
+    number(avg_power, sizeof(avg_power), s->avg_power, s->power_valid, 3);
     int count = snprintf(out, capacity,
-        "{\"pitch\":%s,\"roll\":%s,\"power\":%s,\"pitch_target\":%s,\"roll_target\":%s%s}",
-        pitch, roll, power, pt, rt, s->simulated ? ",\"simulated\":true" : "");
+        "{\"pitch\":%s,\"roll\":%s,\"power\":%s,\"pitch_target\":%s,\"roll_target\":%s,"
+        "\"voltage\":%s,\"current\":%s,\"avg_power\":%s}",
+        pitch, roll, power, pt, rt, voltage, current, avg_power);
     if (count < 0 || (size_t)count >= capacity) { out[0] = '\0'; return 0U; }
     return (size_t)count;
 }

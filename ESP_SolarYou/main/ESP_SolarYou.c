@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <math.h>
 #include "motor_control.h"
 #include "system_state.h"
 #include "PID_stabilization.h"
@@ -14,18 +15,14 @@
 #include "sdkconfig.h"
 #include "esp_log.h"
 #include "ble_app.h"
-#include "esp_only_test.h"
 
-#if !CONFIG_SOLARYOU_RUNTIME_ESP_ONLY_TEST
 static const char *TAG  = "Main";
-#endif
 
 system_state_t curr_state;
 
 pid_controller_t roll_ctlr;
 pid_controller_t pitch_ctlr;
 
-#if !CONFIG_SOLARYOU_RUNTIME_ESP_ONLY_TEST
 static const stab_config_t stab_config = {
     .roll_Kp = 0.7f,
     .roll_Ki = 1.5f,
@@ -85,16 +82,9 @@ static esp_err_t sensor_dashboard_update_imu(system_state_t *state)
     return ESP_OK;
 }
 #endif
-#endif /* Real-sensor helpers are not used in the ESP-only test. */
 
 void app_main(void)
 {
-#if CONFIG_SOLARYOU_RUNTIME_ESP_ONLY_TEST
-#if CONFIG_SOLARYOU_RUNTIME_FULL_CONTROL || !CONFIG_SOLARYOU_BLE_TELEMETRY
-#error "ESP-only testing requires BLE enabled and full control disabled"
-#endif
-    esp_only_test_run();
-#else
 
     // Set system state
     sys_state_reset(&curr_state);
@@ -246,8 +236,10 @@ void app_main(void)
             }
 #endif
 
+            curr_state.imu_valid = err == ESP_OK && isfinite(curr_state.pitch_imu) &&
+                isfinite(curr_state.roll_imu);
 #if CONFIG_SOLARYOU_BLE_TELEMETRY
-            ble_app_update_imu(curr_state.pitch_imu, curr_state.roll_imu, err == ESP_OK);
+            ble_app_update_imu(curr_state.pitch_imu, curr_state.roll_imu, curr_state.imu_valid);
 #endif
 
             curr_time = esp_timer_get_time();
@@ -301,7 +293,9 @@ void app_main(void)
             }
             uart_telemetry_send(&curr_state);
 #if CONFIG_SOLARYOU_BLE_TELEMETRY
-            ble_app_update_power(curr_state.power, curr_state.power_valid && err == ESP_OK);
+            ble_app_update_power(curr_state.voltage, curr_state.current,
+                                 curr_state.power, curr_state.avg_power,
+                                 curr_state.power_valid && err == ESP_OK);
 #endif
         }
 
@@ -311,5 +305,4 @@ void app_main(void)
 
         vTaskDelay(1);
     }
-#endif
 }

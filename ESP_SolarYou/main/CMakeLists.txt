@@ -7,10 +7,6 @@ if(CONFIG_SOLARYOU_BLE_TELEMETRY)
     list(APPEND app_sources "ble_protocol.c" "ble_telemetry.c" "ble_app.c")
 endif()
 
-if(CONFIG_SOLARYOU_RUNTIME_ESP_ONLY_TEST)
-    list(APPEND app_sources "esp_only_test.c")
-endif()
-
 idf_component_register(SRCS ${app_sources}
                        INCLUDE_DIRS "."
                        REQUIRES ${app_dependencies})
