@@ -1,0 +1,22 @@
+idf_component_register(SRCS "ESP_SolarYou.c" "stabilization_task.c" "light_task.c" "uart_telemetry.c" "ble_protocol.c" "ble_telemetry.c" "ble_app.c"
+                    INCLUDE_DIRS "."
+                    REQUIRES
+                        esp_timer
+                        sensor_service
+                        pid_stabilization
+                        motor_control
+                        system_state
+                        board_config
+                        bt
+                        nvs_flash
+                    )
+
+target_compile_options(
+    ${COMPONENT_LIB} 
+    PRIVATE 
+    -Wall 
+    -Wextra 
+    -Wconversion 
+    -Wdouble-promotion
+    )
+

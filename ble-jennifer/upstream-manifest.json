@@ -1,0 +1,1295 @@
+{
+  "repository": "manuelGarciaAcha/SolarYou_Capstone",
+  "firmware": {
+    "branch": "main",
+    "commit": "d4b2de907897ce507fc3196b2f484c0767f396df",
+    "files": [
+      {
+        "path": ".gitignore",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2d4b168e8172d724e1a63f85e9e64f3496db55fd",
+        "size": 201,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/2d4b168e8172d724e1a63f85e9e64f3496db55fd"
+      },
+      {
+        "path": "ESP_SolarYou/CMakeLists.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3a0674bd718405bd4a965d892f6314f45e105809",
+        "size": 242,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/3a0674bd718405bd4a965d892f6314f45e105809"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/CMakeLists.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "431fe13cda4d96a1405822c77edf3b0d2c384e53",
+        "size": 552,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/431fe13cda4d96a1405822c77edf3b0d2c384e53"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/.dependency-version",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4986da945c8389cd3be79dcc3025f3a56eb30894",
+        "size": 21,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/4986da945c8389cd3be79dcc3025f3a56eb30894"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/.github/ISSUE_TEMPLATE.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f0e26146fa935ca718cdc141f83555bbd3e0c067",
+        "size": 2624,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/f0e26146fa935ca718cdc141f83555bbd3e0c067"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/.github/PULL_REQUEST_TEMPLATE.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7b641eb862c05e126ef698221ffebe8f33ec1a5a",
+        "size": 1415,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/7b641eb862c05e126ef698221ffebe8f33ec1a5a"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/.github/workflows/githubci.yml",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "28f046bedeea62592caede8f1568fccd15e44888",
+        "size": 760,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/28f046bedeea62592caede8f1568fccd15e44888"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/Doxyfile",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fd2195de3025051beb4c6267a2d9d6f038e74a28",
+        "size": 108421,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/fd2195de3025051beb4c6267a2d9d6f038e74a28"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "19e8bc89a4045043e865636d60a8c4f186e6bf3b",
+        "size": 2777,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/19e8bc89a4045043e865636d60a8c4f186e6bf3b"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/assets/board.jpg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "81abc618f765f2ad1589144cf3ff5605eda4c417",
+        "size": 449327,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/81abc618f765f2ad1589144cf3ff5605eda4c417"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/code-of-conduct.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8ee6e449820513b3be543ed57c94b77a84f203ed",
+        "size": 5829,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/8ee6e449820513b3be543ed57c94b77a84f203ed"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/examples/more_reports/.leonardo.test.skip",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "size": 0,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/examples/more_reports/.uno.test.skip",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "size": 0,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/examples/more_reports/more_reports.ino",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9ea7e377e6c73edd0d63b3967287437d5b56dc3e",
+        "size": 9587,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/9ea7e377e6c73edd0d63b3967287437d5b56dc3e"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/examples/quaternion_yaw_pitch_roll/.leonardo.test.skip",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "size": 0,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/examples/quaternion_yaw_pitch_roll/.uno.test.skip",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "size": 0,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/examples/quaternion_yaw_pitch_roll/quaternion_yaw_pitch_roll.ino",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "076d595969858b4ee2477664f1dc9c9f185d4501",
+        "size": 3905,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/076d595969858b4ee2477664f1dc9c9f185d4501"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/examples/rotation_vector/.leonardo.test.skip",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "size": 0,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/examples/rotation_vector/.uno.test.skip",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "size": 0,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/examples/rotation_vector/rotation_vector.ino",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a518806381dd33113bd3f4be8984eaca21077b3c",
+        "size": 2292,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/a518806381dd33113bd3f4be8984eaca21077b3c"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/library.properties",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "91bc0e1413b9ae61f391ec5eab292739531fcc62",
+        "size": 359,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/91bc0e1413b9ae61f391ec5eab292739531fcc62"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/license.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bc90c68f522048e535bb382ea6f7e769542ea0cd",
+        "size": 1516,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/bc90c68f522048e535bb382ea6f7e769542ea0cd"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/src/Adafruit_BNO08x.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0cd1fc5e591a5cb6e7b91cde71b935acd229fcbc",
+        "size": 16651,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/0cd1fc5e591a5cb6e7b91cde71b935acd229fcbc"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/src/Adafruit_BNO08x.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "417c7e1ed89f3e2881ee724153f23bff685d027f",
+        "size": 1968,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/417c7e1ed89f3e2881ee724153f23bff685d027f"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/src/NOTICE.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a9ab60beae589be5f905220d73730efe53822ed3",
+        "size": 432,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/a9ab60beae589be5f905220d73730efe53822ed3"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/src/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3200074f61d46e498f60cc6575d900dc4c595935",
+        "size": 594,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/3200074f61d46e498f60cc6575d900dc4c595935"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/src/sh2.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d2f00f0b00d2d80efa78f10ac58e2500aa55fb4c",
+        "size": 69073,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/d2f00f0b00d2d80efa78f10ac58e2500aa55fb4c"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/src/sh2.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ec556ed603ff72bc42e0084eba6f8fc6445ad4ab",
+        "size": 23580,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/ec556ed603ff72bc42e0084eba6f8fc6445ad4ab"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/src/sh2_SensorValue.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c2aa2eccbb66f82015fbf61279b54cd89c6ab3b8",
+        "size": 20989,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/c2aa2eccbb66f82015fbf61279b54cd89c6ab3b8"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/src/sh2_SensorValue.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "19a61053d3fbe2f7c900965d86216d8e4355376b",
+        "size": 13481,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/19a61053d3fbe2f7c900965d86216d8e4355376b"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/src/sh2_err.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f10ebad51456fb7ce9d86aac19c8d32f675531f0",
+        "size": 1403,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/f10ebad51456fb7ce9d86aac19c8d32f675531f0"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/src/sh2_hal.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b1cd8089b362dc3a7ec5eacafe5ce300b92dfe2e",
+        "size": 4304,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/b1cd8089b362dc3a7ec5eacafe5ce300b92dfe2e"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/src/sh2_util.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ec62afed4baf22e98d907193cf41b100e5b3df27",
+        "size": 2310,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/ec62afed4baf22e98d907193cf41b100e5b3df27"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/src/sh2_util.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6992a175cda25c8b81fa7ce89e11cd2a20870739",
+        "size": 1427,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/6992a175cda25c8b81fa7ce89e11cd2a20870739"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/src/shtp.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "503b5eb5d3b001862987b90cbfad68648054543e",
+        "size": 23788,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/503b5eb5d3b001862987b90cbfad68648054543e"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_bno08x/vendor/src/shtp.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4e5a10b768f3c034c8f0e000f78d8bd57d54dd0f",
+        "size": 3014,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/4e5a10b768f3c034c8f0e000f78d8bd57d54dd0f"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/CMakeLists.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "539b89915cdb7713db3af91606dd7430078b3936",
+        "size": 509,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/539b89915cdb7713db3af91606dd7430078b3936"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/.clang-format",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c6cdd16ce7357d35ed1e08582b63f13eea0423a3",
+        "size": 6815,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/c6cdd16ce7357d35ed1e08582b63f13eea0423a3"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/.dependency-version",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "08da3535a14fa597f8e1829aa778b1136552883f",
+        "size": 21,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/08da3535a14fa597f8e1829aa778b1136552883f"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/.github/ISSUE_TEMPLATE.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f0e26146fa935ca718cdc141f83555bbd3e0c067",
+        "size": 2624,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/f0e26146fa935ca718cdc141f83555bbd3e0c067"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/.github/PULL_REQUEST_TEMPLATE.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7b641eb862c05e126ef698221ffebe8f33ec1a5a",
+        "size": 1415,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/7b641eb862c05e126ef698221ffebe8f33ec1a5a"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/.github/workflows/githubci.yml",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8a57d7534b4edb3514598cf44272ccf7408ace12",
+        "size": 887,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/8a57d7534b4edb3514598cf44272ccf7408ace12"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/Adafruit_BusIO_Register.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f3e8187b1dba0315d6974f72ca4b1a1748defd8e",
+        "size": 12495,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/f3e8187b1dba0315d6974f72ca4b1a1748defd8e"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/Adafruit_BusIO_Register.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "046e04c396f5ad75a8c16df4b9e7940f396201da",
+        "size": 3802,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/046e04c396f5ad75a8c16df4b9e7940f396201da"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/Adafruit_GenericDevice.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "37f9cfd7cbe664f9bb309f414f3315345a6d2b8c",
+        "size": 3301,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/37f9cfd7cbe664f9bb309f414f3315345a6d2b8c"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/Adafruit_GenericDevice.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d5cb3268ac806e8895e125868e33849672dfd079",
+        "size": 2268,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/d5cb3268ac806e8895e125868e33849672dfd079"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/Adafruit_I2CDevice.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2633cf11fed82dad9d775b1ba6b0ac18ec2995ba",
+        "size": 9404,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/2633cf11fed82dad9d775b1ba6b0ac18ec2995ba"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/Adafruit_I2CDevice.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6bda7bae205beb76eb8238a9e52c194c94ba1ed3",
+        "size": 1139,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/6bda7bae205beb76eb8238a9e52c194c94ba1ed3"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/Adafruit_I2CRegister.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "186850fa6b9deacfb7e0da1ddae45e138c4f5ca8",
+        "size": 252,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/186850fa6b9deacfb7e0da1ddae45e138c4f5ca8"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/Adafruit_SPIDevice.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3283de66548031ec687edeb381ec9d4174527236",
+        "size": 14297,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/3283de66548031ec687edeb381ec9d4174527236"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/Adafruit_SPIDevice.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "82a0281557474238fce8a70de2e1811ead141c8c",
+        "size": 5515,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/82a0281557474238fce8a70de2e1811ead141c8c"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/CMakeLists.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3fcb0b849692a174b5101ff71a40c3e35638806d",
+        "size": 383,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/3fcb0b849692a174b5101ff71a40c3e35638806d"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/LICENSE",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "860e3e28540ab79351cb14665f2078379596a094",
+        "size": 1085,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/860e3e28540ab79351cb14665f2078379596a094"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "59712ff0b8fbbb320f36352f4961dbba252cd7e3",
+        "size": 525,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/59712ff0b8fbbb320f36352f4961dbba252cd7e3"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/component.mk",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "049f190ee76624ce8a82031110de179f8bca4e6b",
+        "size": 31,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/049f190ee76624ce8a82031110de179f8bca4e6b"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/examples/genericdevice_uartregtest/.uno.test.skip",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "size": 0,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/examples/genericdevice_uartregtest/genericdevice_uartregtest.ino",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "59af30896408c4cecf4ca2199cb5d11d73504939",
+        "size": 6283,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/59af30896408c4cecf4ca2199cb5d11d73504939"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/examples/genericdevice_uarttest/.uno.test.skip",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "size": 0,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/examples/genericdevice_uarttest/genericdevice_uarttest.ino",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6a11dbf6c3a205e98546964e49b331ac2d682af0",
+        "size": 2676,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/6a11dbf6c3a205e98546964e49b331ac2d682af0"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/examples/i2c_address_detect/i2c_address_detect.ino",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f2e6ba72e64713aa3bb86693409e7b66dcd0bbb6",
+        "size": 465,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/f2e6ba72e64713aa3bb86693409e7b66dcd0bbb6"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/examples/i2c_readwrite/i2c_readwrite.ino",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4ac2626d204d56b9d90d743282baeeb87878da86",
+        "size": 1086,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/4ac2626d204d56b9d90d743282baeeb87878da86"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/examples/i2c_registers/i2c_registers.ino",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2d44c8354e79291f27b2b1dfea9f31ab23e3f532",
+        "size": 1075,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/2d44c8354e79291f27b2b1dfea9f31ab23e3f532"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/examples/i2corspi_register/i2corspi_register.ino",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "be04606c2e9ceeb77674bf0eb1d1d5701f82b91a",
+        "size": 1039,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/be04606c2e9ceeb77674bf0eb1d1d5701f82b91a"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/examples/spi_modetest/spi_modetest.ino",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ebf14f96f2c40b90edbf4d8ae14b42c05e4b0e48",
+        "size": 805,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/ebf14f96f2c40b90edbf4d8ae14b42c05e4b0e48"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/examples/spi_readwrite/spi_readwrite.ino",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4b9ecf1f384ba53d03cd3ff454de779476b260c2",
+        "size": 963,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/4b9ecf1f384ba53d03cd3ff454de779476b260c2"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/examples/spi_register_bits/spi_register_bits.ino",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d11b440d62c8363b9321c58fe23ef8af5888ce24",
+        "size": 9090,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/d11b440d62c8363b9321c58fe23ef8af5888ce24"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/examples/spi_registers/spi_registers.ino",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "af6069b6476e8b5dc8fbe8113d491328839b4422",
+        "size": 991,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/af6069b6476e8b5dc8fbe8113d491328839b4422"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_busio/vendor/library.properties",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "16154682810b3791636490ad2316157c157d4ebb",
+        "size": 340,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/16154682810b3791636490ad2316157c157d4ebb"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_ina219/CMakeLists.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "93b4d784c1b74dcd4f7057c6bb86c9286c706c2e",
+        "size": 383,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/93b4d784c1b74dcd4f7057c6bb86c9286c706c2e"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_ina219/vendor/.dependency-version",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cde55588d9d45ccb3c101bdbd39fdf00fe62c12e",
+        "size": 21,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/cde55588d9d45ccb3c101bdbd39fdf00fe62c12e"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_ina219/vendor/.github/ISSUE_TEMPLATE.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f0e26146fa935ca718cdc141f83555bbd3e0c067",
+        "size": 2624,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/f0e26146fa935ca718cdc141f83555bbd3e0c067"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_ina219/vendor/.github/PULL_REQUEST_TEMPLATE.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7b641eb862c05e126ef698221ffebe8f33ec1a5a",
+        "size": 1415,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/7b641eb862c05e126ef698221ffebe8f33ec1a5a"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_ina219/vendor/.github/workflows/githubci.yml",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c9ca86469236044e7579cd54e8498f1f1e7bd82a",
+        "size": 759,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/c9ca86469236044e7579cd54e8498f1f1e7bd82a"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_ina219/vendor/.gitignore",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "542d266a956d639424590225fede7353657eace6",
+        "size": 67,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/542d266a956d639424590225fede7353657eace6"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_ina219/vendor/Adafruit_INA219.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "47f480c55017d4dccc7d16c600faeef4183ade4a",
+        "size": 16294,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/47f480c55017d4dccc7d16c600faeef4183ade4a"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_ina219/vendor/Adafruit_INA219.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6b982d5bfa9c2c604af275d37c6e0e60086b97f8",
+        "size": 6829,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/6b982d5bfa9c2c604af275d37c6e0e60086b97f8"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_ina219/vendor/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "28b86e00f0be4fdc667fba1c70e251b5efac8484",
+        "size": 1072,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/28b86e00f0be4fdc667fba1c70e251b5efac8484"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_ina219/vendor/assets/board.jpg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f7c066142b9b8c39df6a83d076796379827cb678",
+        "size": 258426,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/f7c066142b9b8c39df6a83d076796379827cb678"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_ina219/vendor/code-of-conduct.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8ee6e449820513b3be543ed57c94b77a84f203ed",
+        "size": 5829,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/8ee6e449820513b3be543ed57c94b77a84f203ed"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_ina219/vendor/examples/getcurrent/getcurrent.ino",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ac59bc93cedba59decfddf370e04f2bd5b7fe981",
+        "size": 1672,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/ac59bc93cedba59decfddf370e04f2bd5b7fe981"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_ina219/vendor/examples/ina_poweroled/ina_poweroled.ino",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "120696707d34e53fb89a11890e54c3e34aab90ba",
+        "size": 7211,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/120696707d34e53fb89a11890e54c3e34aab90ba"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_ina219/vendor/library.properties",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b3fed29c244ed29ac9e23e8dbb4fa5c0f547b8ce",
+        "size": 317,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/b3fed29c244ed29ac9e23e8dbb4fa5c0f547b8ce"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_ina219/vendor/license.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f6a0f22b826f7a04b50dc56a09b79f1aac6a4cbe",
+        "size": 1499,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/f6a0f22b826f7a04b50dc56a09b79f1aac6a4cbe"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_unified_sensor/CMakeLists.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "325b01ece88e014928bdaa4447a7dd4d13b6c36e",
+        "size": 367,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/325b01ece88e014928bdaa4447a7dd4d13b6c36e"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_unified_sensor/vendor/.gitignore",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d04184a2ec18662aded2ad14b2e4e637334aeaaa",
+        "size": 1273,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/d04184a2ec18662aded2ad14b2e4e637334aeaaa"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_unified_sensor/vendor/Adafruit_Sensor.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b854a5abfe207a9c826a2f798f765b5f0a3ddbb4",
+        "size": 3696,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/b854a5abfe207a9c826a2f798f765b5f0a3ddbb4"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_unified_sensor/vendor/Adafruit_Sensor.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ad865da626d5553c29728f11d6e218bf62e62e4c",
+        "size": 9721,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/ad865da626d5553c29728f11d6e218bf62e62e4c"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_unified_sensor/vendor/LICENSE.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d645695673349e3947e8e5ae42332d0ac3164cd7",
+        "size": 11358,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/d645695673349e3947e8e5ae42332d0ac3164cd7"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_unified_sensor/vendor/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a88e410002a0867810e6351ba21d541faed8dfa7",
+        "size": 12271,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/a88e410002a0867810e6351ba21d541faed8dfa7"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_unified_sensor/vendor/examples/sensortest/sensortest.ino",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d87f60d43faddec87dd8231da72742979f7b50bd",
+        "size": 4174,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/d87f60d43faddec87dd8231da72742979f7b50bd"
+      },
+      {
+        "path": "ESP_SolarYou/components/adafruit_unified_sensor/vendor/library.properties",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "65ffd6ea061c631867f57a46d315effd698ee9a9",
+        "size": 381,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/65ffd6ea061c631867f57a46d315effd698ee9a9"
+      },
+      {
+        "path": "ESP_SolarYou/components/board_config/CMakeLists.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "18f603b95b838d486693335cc3eb187585abd5d1",
+        "size": 52,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/18f603b95b838d486693335cc3eb187585abd5d1"
+      },
+      {
+        "path": "ESP_SolarYou/components/board_config/include/board_config.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "984b3a7f2d2ccfea6fa5a82639af7627a21fe3fa",
+        "size": 761,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/984b3a7f2d2ccfea6fa5a82639af7627a21fe3fa"
+      },
+      {
+        "path": "ESP_SolarYou/components/motor_control/CMakeLists.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f17d190581b7e1ed4df68d1c08718316f82c0aca",
+        "size": 143,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/f17d190581b7e1ed4df68d1c08718316f82c0aca"
+      },
+      {
+        "path": "ESP_SolarYou/components/motor_control/include/motor_control.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fb1c9dfb18d6245210abe83e87dc5b87a3bea2da",
+        "size": 378,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/fb1c9dfb18d6245210abe83e87dc5b87a3bea2da"
+      },
+      {
+        "path": "ESP_SolarYou/components/motor_control/motor_control.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d9bb4dfd66c36d6fc49df4eb1f3c3ec017155610",
+        "size": 2323,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/d9bb4dfd66c36d6fc49df4eb1f3c3ec017155610"
+      },
+      {
+        "path": "ESP_SolarYou/components/pid_stabilization/CMakeLists.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ef8cfc41d38e01c548f584136d6a94fce1f33bf2",
+        "size": 83,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/ef8cfc41d38e01c548f584136d6a94fce1f33bf2"
+      },
+      {
+        "path": "ESP_SolarYou/components/pid_stabilization/PID_stabilization.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f26a43ce13de4e531be9f116d796fb596f70b6fe",
+        "size": 4715,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/f26a43ce13de4e531be9f116d796fb596f70b6fe"
+      },
+      {
+        "path": "ESP_SolarYou/components/pid_stabilization/include/PID_stabilization.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bf5d32e416ecd7748e92113e38ba33b2d6d6ff81",
+        "size": 1652,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/bf5d32e416ecd7748e92113e38ba33b2d6d6ff81"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/CMakeLists.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7f6aa70aaacb0478b6bc619efb5e749d08931b9b",
+        "size": 1395,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/7f6aa70aaacb0478b6bc619efb5e749d08931b9b"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/Kconfig",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "adb2aa8da5f1fd4a59dc33fa1160a6d4aa11eb34",
+        "size": 1117,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/adb2aa8da5f1fd4a59dc33fa1160a6d4aa11eb34"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/imu_sensor.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "520712af192b2b95e06c9567c1b0e6c063d44754",
+        "size": 7030,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/520712af192b2b95e06c9567c1b0e6c063d44754"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/include/component_config.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7fcfcf80a3a54720fd9ff3f97ce6792ece791afe",
+        "size": 2103,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/7fcfcf80a3a54720fd9ff3f97ce6792ece791afe"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/include/imu_sensor.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c5f70804480c0ffffc9b8172fbebc0f28ceeef40",
+        "size": 335,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/c5f70804480c0ffffc9b8172fbebc0f28ceeef40"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/include/light_sensor.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "09142c0f03a3ce96b0921317c2b5bb98c5b78967",
+        "size": 350,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/09142c0f03a3ce96b0921317c2b5bb98c5b78967"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/include/power_sensor.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "793f4341d288462d10044b6e7760e4956f8a198e",
+        "size": 270,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/793f4341d288462d10044b6e7760e4956f8a198e"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/include/sensor_api.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "86e4f753248d5080930af920cee9098496f44686",
+        "size": 2444,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/86e4f753248d5080930af920cee9098496f44686"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/include/sensor_bus.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f7e0e64aee666ec54481916025b736ee7b7a47b8",
+        "size": 100,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/f7e0e64aee666ec54481916025b736ee7b7a47b8"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/include/sensor_json.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5a805e1d70d3a3269d85575c6027f6c5e9343860",
+        "size": 790,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/5a805e1d70d3a3269d85575c6027f6c5e9343860"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/include/sensor_json_keys.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "47b12974473a0d1cdcb0556ce4e62d76444c7ecc",
+        "size": 1584,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/47b12974473a0d1cdcb0556ce4e62d76444c7ecc"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/include/sensor_math.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "11681d31354c3c1adb491058305473492c9cda72",
+        "size": 929,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/11681d31354c3c1adb491058305473492c9cda72"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/include/sensor_status.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8e6821a8397c1134efb2d727892b456230a1d467",
+        "size": 2806,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/8e6821a8397c1134efb2d727892b456230a1d467"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/include/sensor_types.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "929481d55c849fdfb0fdec33c5cc446791d3e882",
+        "size": 591,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/929481d55c849fdfb0fdec33c5cc446791d3e882"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/light_sensor.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "da020582f71912d1b4a8e56fc3707d9d7ddc77c3",
+        "size": 6657,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/da020582f71912d1b4a8e56fc3707d9d7ddc77c3"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/power_sensor.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2161ed03ab82ba28c6eb9d499a1576dc068c0846",
+        "size": 3255,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/2161ed03ab82ba28c6eb9d499a1576dc068c0846"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/sensor_api.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4aa75329bc302236395783a4604425b349b8001e",
+        "size": 7156,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/4aa75329bc302236395783a4604425b349b8001e"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/sensor_bus.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6a6991f73652259cf31e31bdb9bfe0126e6e65be",
+        "size": 350,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/6a6991f73652259cf31e31bdb9bfe0126e6e65be"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/sensor_json.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "42b30254d0e44534117fb3413167b68ac20f3293",
+        "size": 6280,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/42b30254d0e44534117fb3413167b68ac20f3293"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/sensor_math.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f3059915a32011197c4bd2031eef81c5a95f3098",
+        "size": 2414,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/f3059915a32011197c4bd2031eef81c5a95f3098"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/sensor_status.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d2f789a82ffc5414b2bdd3894ec4e71d513a2900",
+        "size": 2767,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/d2f789a82ffc5414b2bdd3894ec4e71d513a2900"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/simulation/imu_sensor_sim.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f3f4a25c6d91c737a12a59e5711cb5cb695b98bf",
+        "size": 4679,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/f3f4a25c6d91c737a12a59e5711cb5cb695b98bf"
+      },
+      {
+        "path": "ESP_SolarYou/components/sensor_service/simulation/power_sensor_sim.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "eb863d6575525021992d997e3def218d81438755",
+        "size": 3421,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/eb863d6575525021992d997e3def218d81438755"
+      },
+      {
+        "path": "ESP_SolarYou/components/system_state/CMakeLists.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f2a854e423790ec44a8ac41b4b3c4af0d0b5c5c1",
+        "size": 78,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/f2a854e423790ec44a8ac41b4b3c4af0d0b5c5c1"
+      },
+      {
+        "path": "ESP_SolarYou/components/system_state/include/system_state.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "60bf18fe163cd6e2de41de92d92ad9568df9ee49",
+        "size": 1146,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/60bf18fe163cd6e2de41de92d92ad9568df9ee49"
+      },
+      {
+        "path": "ESP_SolarYou/components/system_state/system_state.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "63360682fb1d6c58e0641b2346bb5bdff00acd7a",
+        "size": 422,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/63360682fb1d6c58e0641b2346bb5bdff00acd7a"
+      },
+      {
+        "path": "ESP_SolarYou/dependencies.lock",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d3d49469949d8d61fe7ca90ea2ebf9a871a2b537",
+        "size": 20387,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/d3d49469949d8d61fe7ca90ea2ebf9a871a2b537"
+      },
+      {
+        "path": "ESP_SolarYou/main/CMakeLists.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "11f0de6716589fbe98ad65481fc19a26d81a17c1",
+        "size": 549,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/11f0de6716589fbe98ad65481fc19a26d81a17c1"
+      },
+      {
+        "path": "ESP_SolarYou/main/ESP_SolarYou.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0d98b1f57893911dd30099be0b1834ea371b39cc",
+        "size": 9089,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/0d98b1f57893911dd30099be0b1834ea371b39cc"
+      },
+      {
+        "path": "ESP_SolarYou/main/Kconfig.projbuild",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "51bb077113bcee512d4d462f75a47119a33f8471",
+        "size": 1096,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/51bb077113bcee512d4d462f75a47119a33f8471"
+      },
+      {
+        "path": "ESP_SolarYou/main/idf_component.yml",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "586c7f4a0e7a0bf92f9f3678c1d62322ec31adc6",
+        "size": 639,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/586c7f4a0e7a0bf92f9f3678c1d62322ec31adc6"
+      },
+      {
+        "path": "ESP_SolarYou/main/light_task.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c2b06fe1849436fe32bcdd34400e869c8c145798",
+        "size": 1318,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/c2b06fe1849436fe32bcdd34400e869c8c145798"
+      },
+      {
+        "path": "ESP_SolarYou/main/light_task.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2cc1feec933e358db661c951ca613490492c9333",
+        "size": 144,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/2cc1feec933e358db661c951ca613490492c9333"
+      },
+      {
+        "path": "ESP_SolarYou/main/stabilization_task.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e67ccf6058db026fe6b7299b303631ebe2d75cb8",
+        "size": 3582,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/e67ccf6058db026fe6b7299b303631ebe2d75cb8"
+      },
+      {
+        "path": "ESP_SolarYou/main/stabilization_task.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3601f4ec17dd12f6eeaab38f33eea81d21554dcd",
+        "size": 1063,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/3601f4ec17dd12f6eeaab38f33eea81d21554dcd"
+      },
+      {
+        "path": "ESP_SolarYou/main/uart_telemetry.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a95697963f3ad35b1893a70388b523cd09023176",
+        "size": 382,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/a95697963f3ad35b1893a70388b523cd09023176"
+      },
+      {
+        "path": "ESP_SolarYou/main/uart_telemetry.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "59bdc132117d0197f9c2634f6f908ac85be27204",
+        "size": 394,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/59bdc132117d0197f9c2634f6f908ac85be27204"
+      },
+      {
+        "path": "ESP_SolarYou/scripts/fetch_arduino_libraries.ps1",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1fb41c8adee7295067ff127d5e8afbf6758f614e",
+        "size": 2922,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/1fb41c8adee7295067ff127d5e8afbf6758f614e"
+      },
+      {
+        "path": "ESP_SolarYou/scripts/fetch_arduino_libs.sh",
+        "mode": "100755",
+        "type": "blob",
+        "sha": "b1f3355be94add63338d6a00bbc21f7c2ef83a1d",
+        "size": 2685,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/b1f3355be94add63338d6a00bbc21f7c2ef83a1d"
+      },
+      {
+        "path": "ESP_SolarYou/sdkconfig.defaults",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9a96280b2cf03e2714a4eeca25ea47966554c034",
+        "size": 274,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/9a96280b2cf03e2714a4eeca25ea47966554c034"
+      },
+      {
+        "path": "MotorControl_PID.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e439580441f9fd36fb29f4f2b540bdabd591c31b",
+        "size": 1412,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/e439580441f9fd36fb29f4f2b540bdabd591c31b"
+      },
+      {
+        "path": "README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9039b77b87b9e45b296bdb0781b2e4250f67b190",
+        "size": 18981,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/9039b77b87b9e45b296bdb0781b2e4250f67b190"
+      },
+      {
+        "path": "UART_TEST_NOTES.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5bd81c19895c75bcf949382fd1fc1ae2440449a4",
+        "size": 5185,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/5bd81c19895c75bcf949382fd1fc1ae2440449a4"
+      },
+      {
+        "path": "data_schema.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f6275d447ab5ea13f76d578a43ff7f5049606930",
+        "size": 2080,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/f6275d447ab5ea13f76d578a43ff7f5049606930"
+      },
+      {
+        "path": "design_decisions.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b80961e4c9ce96f84ad318bc85f461c7ba3a6ddd",
+        "size": 3269,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/b80961e4c9ce96f84ad318bc85f461c7ba3a6ddd"
+      }
+    ]
+  },
+  "dashboard": {
+    "branch": "zack",
+    "commit": "d568ba54187871d1f962b6d4d536e853b8c70e1b",
+    "files": [
+      {
+        "path": ".gitignore",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e43b0f988953ae3a84b00331d0ccf5f7d51cb3cf",
+        "size": 10,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/e43b0f988953ae3a84b00331d0ccf5f7d51cb3cf"
+      },
+      {
+        "path": "README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c7a72c32d73fc389c99095bde222ab969daf50f5",
+        "size": 20,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/c7a72c32d73fc389c99095bde222ab969daf50f5"
+      },
+      {
+        "path": "dashboard/.gitignore",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "06012ad2077289e729a2be7e0b46ace4479d99d1",
+        "size": 234,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/06012ad2077289e729a2be7e0b46ace4479d99d1"
+      },
+      {
+        "path": "dashboard/ESP32_INTEGRATION.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9cb0c51c066ae4d369de10aa42e164142e066088",
+        "size": 21526,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/9cb0c51c066ae4d369de10aa42e164142e066088"
+      },
+      {
+        "path": "dashboard/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b737223b860ef77a774793f88f65d5c7919e32e3",
+        "size": 7926,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/b737223b860ef77a774793f88f65d5c7919e32e3"
+      },
+      {
+        "path": "dashboard/app.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "88f23eaa5fd6b06b230521c5410bd7b5c86f7d5d",
+        "size": 29429,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/88f23eaa5fd6b06b230521c5410bd7b5c86f7d5d"
+      },
+      {
+        "path": "dashboard/config.example.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "aba186f3083e4fafb8032dfa546d60ca4ed2243c",
+        "size": 188,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/aba186f3083e4fafb8032dfa546d60ca4ed2243c"
+      },
+      {
+        "path": "dashboard/requirements.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ec5fd018646688afa12af1d90da610806ae4226c",
+        "size": 79,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/ec5fd018646688afa12af1d90da610806ae4226c"
+      },
+      {
+        "path": "dashboard/static/css/style.css",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e37b4d597ea2c611c3e18edae8dbaf5ab3a6a1e4",
+        "size": 9251,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/e37b4d597ea2c611c3e18edae8dbaf5ab3a6a1e4"
+      },
+      {
+        "path": "dashboard/static/js/dashboard.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "af4c5d9c048d2d0460f65671168466699efa6884",
+        "size": 24134,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/af4c5d9c048d2d0460f65671168466699efa6884"
+      },
+      {
+        "path": "dashboard/static/js/vendor/chart.umd.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "44f80651b852b5af15a373e3c8408ffb5761a767",
+        "size": 205125,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/44f80651b852b5af15a373e3c8408ffb5761a767"
+      },
+      {
+        "path": "dashboard/static/js/vendor/socket.io.min.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f39af5c95df2ae91d2a1d8873fc08ff86f1553eb",
+        "size": 49732,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/f39af5c95df2ae91d2a1d8873fc08ff86f1553eb"
+      },
+      {
+        "path": "dashboard/templates/index.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e9e70e3e1b12c5f988bd26694df1b4ced4a4a73c",
+        "size": 8882,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/e9e70e3e1b12c5f988bd26694df1b4ced4a4a73c"
+      },
+      {
+        "path": "dashboard/tests/test_messages.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a31db9700c2bd173e5e1877203af650cf82835f1",
+        "size": 7464,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/a31db9700c2bd173e5e1877203af650cf82835f1"
+      },
+      {
+        "path": "dashboard/tests/test_serial.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2236743a641bcc1a68a9d0da59422b2d0b4196f7",
+        "size": 4207,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/2236743a641bcc1a68a9d0da59422b2d0b4196f7"
+      },
+      {
+        "path": "dashboard/tools/fake_esp32_ws.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "263fb6acc4ea8ec7034742e0a326a6e472a7fa36",
+        "size": 2622,
+        "url": "https://api.github.com/repos/manuelGarciaAcha/SolarYou_Capstone/git/blobs/263fb6acc4ea8ec7034742e0a326a6e472a7fa36"
+      }
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "date": "2026-10-29",
+  "version": "ble-jennifer",
+  "method": "CUA in the in-app browser against the updated BLE simulator",
+  "checks": [
+    "generated five-field C telemetry reaches the existing dashboard",
+    "rate selection displays Verifying then confirmed readback at 10 updates/s",
+    "live readings continue and CSV row count grows during simulation",
+    "selected 10 updates/s remains applied across simulated reconnect cycles",
+    "no horizontal overflow",
+    "no browser JavaScript errors"
+  ],
+  "pageErrors": [],
+  "screenshot": "dashboard-ble.png",
+  "physical_radio_or_control_model": false,
+  "visible_result": {
+    "selected_rate_hz": 10,
+    "rate_enabled": true,
+    "csv_rows_observed": 1499,
+    "horizontal_overflow": false
+  }
+}
